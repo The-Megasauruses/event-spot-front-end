@@ -1,19 +1,19 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, } from 'react-native';
-import { Button } from 'react-native-paper';
+import { View} from 'react-native';
+import { Button, Text, TextInput } from 'react-native-paper';
 
 const SignInScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
-    // Handle sign-in logic (e.g., call authentication API)
+
     console.log('Signing in with:', email, password);
   };
 
   return (
     <View>
-      <Text>Sign In</Text>
+      <Text>Login</Text>
       <TextInput
         placeholder="Email"
         value={email}
@@ -25,8 +25,8 @@ const SignInScreen = ({ navigation }) => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title="Sign In" onPress={handleSignIn} />
-      <Button title="Go to Sign Up" onPress={() => navigation.navigate('SignUp')} />
+      <Button mode="outlined" onPress={handleSignIn}>Login</Button>
+      <Button  mode="outlined" onPress={() => navigation.navigate('SignUp')}>SignUp</Button>
     </View>
   );
 };

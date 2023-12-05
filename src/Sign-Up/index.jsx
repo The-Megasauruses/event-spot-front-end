@@ -1,14 +1,14 @@
-import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
-import { Button } from 'react-native-paper';
+import React, { useState } from "react";
+import { View } from "react-native";
+import { Button, Text, TextInput } from "react-native-paper";
 
 const SignUpScreen = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
     // Handle sign-up logic (e.g., call registration API)
-    console.log('Signing up with:', email, password);
+    console.log("Signing up with:", email, password);
   };
 
   return (
@@ -25,7 +25,6 @@ const SignUpScreen = () => {
         value={password}
         onChangeText={(text) => setPassword(text)}
       />
-      <Button title="Sign Up" onPress={handleSignUp} />
     </View>
   );
 };
