@@ -15,10 +15,10 @@ const LoggedInLayout = () => {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1, 
-        backgroundColor:"#5271FF",
-
-    }
+      flex: 1, 
+      backgroundColor:"#5271FF",
+      alignItems: 'stretch',
+    },
 })
 
 export default LoggedInLayout

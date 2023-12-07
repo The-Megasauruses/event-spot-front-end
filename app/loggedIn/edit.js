@@ -6,7 +6,6 @@ const Edit = () => {
   return (
     <View style={styles.container}>
       <Text style={styles.textSpace}>Edit</Text>
-      <Link href="/loggedIn/profile" style={styles.textSpace}>Go Back</Link>
     </View>
   )
 }

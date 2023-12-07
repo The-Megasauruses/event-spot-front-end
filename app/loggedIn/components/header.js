@@ -3,18 +3,28 @@ import React from "react";
 import UserIcon from "./userIcon";
 import BackIcon from "./backIcon";
 import SearchIcon from "./searchIcon";
+import EditIcon from "./editIcon";
+import { usePathname } from 'expo-router'
 
 const Header = () => {
+
+  const path = usePathname();
+
+  let back = path === "/loggedIn/search" ||
+             path === "/loggedIn/profile" ||
+             path === "/loggedIn/edit" ? true : false
 
   return (
     <>
       <View style={styles.container}>
-        <SearchIcon />
+        {back ? <BackIcon /> : <SearchIcon />}
         <Image
           style={styles.image}
           source={require("../../../assets/eventSpot.png")}
         />
-        <UserIcon />
+        {path === "/loggedIn/home" && <UserIcon />}
+        {path === "/loggedIn/profile" && <EditIcon />}
+        {path !== "/loggedIn/profile" && path !== "/loggedIn/home" && <View style={{width: 24}}></View>}
       </View>
     </>
   );

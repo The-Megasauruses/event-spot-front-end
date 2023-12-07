@@ -1,15 +1,14 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { Link, useLocalSearchParams } from 'expo-router'
+import { Link, usePathname } from 'expo-router'
 
 const Search = () => {
 
-  const params = useLocalSearchParams();
-  console.log(params.page);
+  const path = usePathname()  
+
   return (
     <View>
-      <Text>{params.page}</Text>
-      <Link href="/loggedIn/home">Go Back</Link>
+      <Text>Search</Text>
     </View>
   )
 }

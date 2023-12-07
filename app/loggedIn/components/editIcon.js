@@ -3,14 +3,14 @@ import { TouchableOpacity } from "react-native";
 import { Link } from "expo-router";
 import React from "react";
 
-const UserIcon = () => {
+const EditIcon = () => {
   return (
-    <Link href={"/loggedIn/profile"} asChild>
+    <Link href={"/loggedIn/edit"} asChild>
       <TouchableOpacity>
-        <AntDesign name="user" size={24} color="black" />
+        <AntDesign name="edit" size={24} color="black" />
       </TouchableOpacity>
     </Link>
   );
 };
 
-export default UserIcon;
+export default EditIcon;
