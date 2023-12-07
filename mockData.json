@@ -1,0 +1,26 @@
+[
+    {
+      "id": 1,
+      "title": "Event Title 1",
+      "date": "Date: 1/23/24 @ 5:00pm",
+      "location": "Location: 1234 Street Ave, Seattle WA",
+      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "imgPath": "https://picsum.photos/699"
+    },
+    {
+      "id": 2,
+      "title": "Event Title 2",
+      "date": "Date: 1/23/24 @ 5:00pm",
+      "location": "Location: 1234 Street Ave, Seattle WA",
+      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "imgPath": "https://picsum.photos/701"
+    },
+    {
+      "id": 3,
+      "title": "Event Title 3",
+      "date": "Date: 1/23/24 @ 5:00pm",
+      "location": "Location: 1234 Street Ave, Seattle WA",
+      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+      "imgPath": "https://picsum.photos/700"
+    }
+  ]
