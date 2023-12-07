@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput } from 'react-native';
+import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
 const SignUpScreen = () => {
@@ -12,6 +12,7 @@ const SignUpScreen = () => {
   };
 
   return (
+    <>
     <View>
       <Text>Sign Up</Text>
       <View style={styles.inputView}>
@@ -31,6 +32,7 @@ const SignUpScreen = () => {
         Sign Up
       </Button>
     </View>
+    </>
   );
 };
 
