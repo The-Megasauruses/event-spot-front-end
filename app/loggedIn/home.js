@@ -1,57 +1,87 @@
 import React from "react";
-import { View, Text, Platform } from "react-native";
+import { View, Text, Platform, Image, FlatList, Button } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
+import mockData from '../../mockData.json';
 
 const Home = () => {
+
   return (
-    <View style={{ marginVertical: "5%", alignItems: "center" }}>
+    <View style={styles.container}>
       <Text style={styles.title}>Upcoming Events</Text>
-      <Card style={styles.card}>
-        <Card.Content>
-          <Title style={styles.spacing}>Event Title</Title>
-          <Card.Cover
-            source={require("../../assets/eventSpot.png")}
-            style={styles.image}
-          />
-          <Paragraph style={styles.spacing}>Date: 1/23/24 @ 5:00pm</Paragraph>
-          <Paragraph style={styles.spacing}>
-            Location: Code Fellows Campus, Seattle WA
-          </Paragraph>
-          <Paragraph style={styles.spacing}>
-            Description: Lorem ipsum dolor sit amet, consectetur adipiscing
-            elit.
-          </Paragraph>
-        </Card.Content>
-      </Card>
+      <FlatList
+        style={styles.list}
+        data={mockData}
+        keyExtractor={(item) => item.id}
+        renderItem={({ item }) => (
+          <Card style={styles.card}>
+            <Card.Content>
+              <Title style={styles.spacing}>{item.title}</Title>
+              <Image
+                source={{ uri: item.imgPath }} 
+                style={styles.image}
+              />
+              <Paragraph style={styles.spacing}>
+                {item.date}
+              </Paragraph>
+              <Paragraph style={styles.spacing}>
+                {item.location}
+              </Paragraph>
+              <Paragraph style={styles.spacing}>
+                {item.description}
+              </Paragraph>
+              {/* <Button mode="contained" style={{width: '40%'}} onPress={() => console.log('This button should add this event')}>
+                join
+              </Button> */}
+            </Card.Content>
+          </Card>
+        )}
+      />
+      <View style={styles.button}>
+        <Button title='Create an Event' color='#fff' onPress={() => console.log('This button should link to Create Event page')}/>
+      </View>
     </View>
   );
 };
 
 const styles = {
-  card: {
+  container: {
+    marginVertical: "5%", 
+    alignItems: "center",
+  },
+  list: {
+    height: '80%',
     width: "80%",
     borderRadius: 20,
+  },
+  card: {
     backgroundColor: "#add8e6",
+    marginVertical: 5,
   },
   title: {
-    color: "#ffb6c1",
+    color: "#663399",
     fontSize: 20,
-    fontFamily: Platform.OS === 'ios' ? "Kailasa-Bold" : "Roboto",
+    fontFamily: Platform.OS === "ios" ? "Arial-BoldMT" : "Roboto",
     textDecorationLine: "underline",
-    textDecorationColor: "#ffb6c1",
+    textDecorationColor: "#663399",
     textDecorationStyle: "double",
-    marginVertical: 10,
+    marginBottom: '3%',
     textAlign: "center",
   },
   spacing: {
-    marginBottom: 10,
+    marginBottom: '3%',
   },
   image: {
-    width: 160,
+    width: '60%',
     height: 60,
     resizeMode: "cover",
-    marginBottom: 10,
+    marginBottom: '3%',
   },
+  button: {
+    backgroundColor: "#663399",
+    borderRadius: '30%',
+    padding: 5,
+    marginTop: '3%',
+  }
 };
 
 export default Home;

@@ -2,11 +2,11 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 
-const SignInScreen = ({ navigation }) => {
+const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSignIn = () => {
+  const handleSignInButton = () => {
 
     console.log('Signing in with:', email, password);
   };
@@ -29,7 +29,7 @@ const SignInScreen = ({ navigation }) => {
       </View>
 
       <View style={styles.button}>
-        <Button mode="outlined" onPress={handleSignIn}>
+        <Button mode="outlined" onPress={handleSignInButton}>
           Sign In
         </Button>
         <Button mode="outlined" onPress={() => navigation.navigate('SignUp')}>
