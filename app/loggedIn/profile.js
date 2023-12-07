@@ -1,13 +1,13 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import UserAvatar from "./components/userAvatar"
+import UserAvatar from "./components/userAvatar.js"
 
 const Profile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
-        {/* <UserAvatar /> */}
+        <UserAvatar />
       </View>
       <View style={styles.infoContainer}>
         <Text style={styles.userName}>John Doe</Text>
