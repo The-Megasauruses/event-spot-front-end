@@ -1,9 +1,9 @@
 import React from 'react';
 import { View, Text, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import UserAvatar from '../../components/UserAvatar';
+import UserAvatar from "./components/userAvatar"
 
-const ProfileScreen = () => {
+const Profile = () => {
   return (
     <View style={styles.container}>
       <View style={styles.avatarContainer}>
@@ -46,4 +46,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ProfileScreen;
+export default Profile;
