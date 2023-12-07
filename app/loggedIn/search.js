@@ -1,6 +1,6 @@
 import { View, Text } from 'react-native'
 import React from 'react'
-import { Link, usePathname } from 'expo-router'
+import { usePathname } from 'expo-router'
 
 const Search = () => {
 

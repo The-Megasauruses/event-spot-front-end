@@ -1,5 +1,5 @@
 import React from "react";
-import { View, Text } from "react-native";
+import { View, Text, Platform } from "react-native";
 import { Card, Title, Paragraph } from "react-native-paper";
 
 const Home = () => {
@@ -36,7 +36,7 @@ const styles = {
   title: {
     color: "#ffb6c1",
     fontSize: 20,
-    fontFamily: "Kailasa-Bold",
+    fontFamily: Platform.OS === 'ios' ? "Kailasa-Bold" : "Roboto",
     textDecorationLine: "underline",
     textDecorationColor: "#ffb6c1",
     textDecorationStyle: "double",
