@@ -8,6 +8,7 @@ UserSlice = createSlice({
     email: null,
     homeTown: null,
     phone: null,
+    avatarUrl: null,
     events: [],
   },
   reducers: {

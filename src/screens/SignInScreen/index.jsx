@@ -7,14 +7,14 @@ const SignInScreen = ({ navigation }) => {
   const [password, setPassword] = useState('');
 
   const handleSignIn = () => {
-    // Handle sign-in logic (e.g., call authentication API)
+
     console.log('Signing in with:', email, password);
   };
 
   return (
-    <View style={styles.container}>
+    <>
+    <View>
       <Text>Sign In</Text>
-      <View style={styles.inputView}>
       <TextInput
         placeholder="Email"
         value={email}
@@ -27,6 +27,7 @@ const SignInScreen = ({ navigation }) => {
         onChangeText={(text) => setPassword(text)}
       />
       </View>
+
       <View style={styles.button}>
         <Button mode="outlined" onPress={handleSignIn}>
           Sign In
@@ -35,7 +36,7 @@ const SignInScreen = ({ navigation }) => {
           Not a member?  Register
         </Button>
       </View>
-    </View>
+      </>
   );
 };
 
@@ -43,7 +44,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#5271ff',
+    backgroundColor: '#5271ff', 
     alignItems: 'center',
     justifyContent: 'center',
   },
