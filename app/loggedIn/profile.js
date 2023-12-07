@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   },
   userEmail: {
     fontSize: 16,
-    color: 'gray',
+    color: 'black',
     marginBottom: 16,
   },
 });

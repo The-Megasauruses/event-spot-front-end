@@ -36,7 +36,7 @@ const styles = {
   title: {
     color: "#ffb6c1",
     fontSize: 20,
-    fontFamily: Platform.OS === "ios" ? "Kailasa-Bold" : "Roboto",
+    fontFamily: Platform.OS === 'ios' ? "Kailasa-Bold" : "Roboto",
     textDecorationLine: "underline",
     textDecorationColor: "#ffb6c1",
     textDecorationStyle: "double",
