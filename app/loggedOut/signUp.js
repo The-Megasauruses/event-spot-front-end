@@ -9,6 +9,14 @@ const SignUpScreen = () => {
   const handleSignUp = () => {
     // Handle sign-up logic (e.g., call registration API)
     console.log("Signing up with:", email, password);
+    auth
+      .createUserWithEmailAndPassword(email, password)
+      .then(userCredentials => {
+        const user = userCredentials.user;
+        console.log('Registered with:', user.email); 
+      })
+      .catch(error => alert(error.message))
+  
   };
 
   return (
