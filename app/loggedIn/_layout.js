@@ -2,7 +2,18 @@ import { Slot } from "expo-router";
 import Header from "./components/header";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { PaperProvider } from "react-native-paper";
+import { PaperProvider, MD3LightTheme as DefaultTheme } from "react-native-paper";
+
+// const theme = {
+//   ...DefaultTheme,
+//   // Specify custom property
+//   myOwnProperty: true,
+//   // Specify custom property in nested object
+//   colors: {
+//     ...DefaultTheme.colors,
+//     myOwnColor: '#ADD8E6',
+//   },
+// };
 
 const LoggedInLayout = () => {
   return (

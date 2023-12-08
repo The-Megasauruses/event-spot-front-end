@@ -1,4 +1,4 @@
-import { View, Text } from "react-native";
+import { View, Text, TextInput } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
 
@@ -7,7 +7,13 @@ const CreateEvent = () => {
     <View style={styles.container}>
       <Text style={styles.title}>Create an Event</Text>
 
-      
+      <TextInput
+        style={styles.input}
+        onChangeText={onChangeNumber}
+        value={number}
+        placeholder="useless placeholder"
+        keyboardType="numeric"
+      />
 
       <Button
         mode="contained"
