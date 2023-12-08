@@ -1,16 +1,19 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import {app} from "../../config"
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const handleSignUp = () => {
+const auth = getAuth();
     // Handle sign-up logic (e.g., call registration API)
     console.log("Signing up with:", email, password);
-    auth
-      .createUserWithEmailAndPassword(email, password)
+    console.log('auth', auth)
+    createUserWithEmailAndPassword(auth, email, password)
       .then(userCredentials => {
         const user = userCredentials.user;
         console.log('Registered with:', user.email); 

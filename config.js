@@ -3,24 +3,27 @@
 import {initializeApp} from "firebase/app";
 import {getFirestore} from "firebase/firestore";
 import {getAuth} from "firebase/auth";
+import * as firebase from "firebase/app";
 
 const firebaseConfig = {
-  apiKey: process.env.apiKey,
-  authDomain: process.env.authDomain,
-  projectId: process.env.projectId,
-  storageBucket: process.env.storageBucket,
-  messagingSenderId: process.env.messagingSenderId,
-  appId: process.env.appId,
-  measurementId: process.env.appId
+  apiKey: "AIzaSyCR49mDOeKhqKvPkwqO9keVfaDCfmajulQ",
+  authDomain: "event-spot-f47e4.firebaseapp.com",
+  projectId: "event-spot-f47e4",
+  storageBucket: "event-spot-f47e4.appspot.com",
+  messagingSenderId: "706132398628",
+  appId: "1:706132398628:web:6cbace0ec0c0e1c6787eb1",
+  measurementId: "G-TS1HV1Y541"
 };
+
 
 console.log(firebaseConfig)
 
-const app = initializeApp(firebaseConfig);
+const app = !firebase.apps ? initializeApp(firebaseConfig) : firebase.app()
 
 const db = getFirestore(app);
 
 const auth = getAuth(app);
+console.log('app', app)
 
 
 export {db, app, auth};
