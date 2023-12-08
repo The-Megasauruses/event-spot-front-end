@@ -12,7 +12,8 @@ const Header = () => {
 
   let back = path === "/loggedIn/search" ||
              path === "/loggedIn/profile" ||
-             path === "/loggedIn/edit" ? true : false
+             path === "/loggedIn/edit" ||
+             path === "/loggedIn/createEvent" ? true : false
 
   return (
     <>
