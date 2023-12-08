@@ -1,6 +1,7 @@
 import React from "react";
-import { View, Text, Platform, Image, FlatList, Button } from "react-native";
-import { Card, Title, Paragraph } from "react-native-paper";
+import { View, Text, Platform, Image, FlatList, TouchableOpacity } from "react-native";
+import { Card, Title, Paragraph, Button } from "react-native-paper";
+import { Link } from 'expo-router';
 import mockData from '../../mockData.json';
 
 const Home = () => {
@@ -29,16 +30,18 @@ const Home = () => {
               <Paragraph style={styles.spacing}>
                 {item.description}
               </Paragraph>
-              {/* <Button mode="contained" style={{width: '40%'}} onPress={() => console.log('This button should add this event')}>
+              <Button mode="contained" style={{width: '40%'}} onPress={() => console.log('This button should add this to my events')}>
                 join
-              </Button> */}
+              </Button>
             </Card.Content>
           </Card>
         )}
       />
-      <View style={styles.button}>
-        <Button title='Create an Event' color='#fff' onPress={() => console.log('This button should link to Create Event page')}/>
-      </View>
+      <Link href={"/loggedIn/createEvent"} asChild>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText}>Create an event</Text>
+          </TouchableOpacity>
+        </Link>
     </View>
   );
 };
@@ -79,8 +82,12 @@ const styles = {
   button: {
     backgroundColor: "#663399",
     borderRadius: '30%',
-    padding: 5,
-    marginTop: '3%',
+    padding: 10,
+    marginTop: '4%',
+  },
+  buttonText: {
+    color: 'white',
+    fontSize: 18,
   }
 };
 
