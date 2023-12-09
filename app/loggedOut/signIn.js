@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
+import { Link } from 'expo-router';
+
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
@@ -13,30 +15,32 @@ const SignInScreen = () => {
 
   return (
     <>
-    <View>
-      <Text>Sign In</Text>
-      <TextInput
-        placeholder="Email"
-        value={email}
-        onChangeText={(text) => setEmail(text)}
-      />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-      />
+      <View>
+        <Text>Sign In</Text>
+        <TextInput
+          placeholder="Email"
+          value={email}
+          onChangeText={(text) => setEmail(text)}
+        />
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={(text) => setPassword(text)}
+        />
       </View>
 
       <View style={styles.button}>
         <Button mode="outlined" onPress={handleSignInButton}>
           Sign In
         </Button>
-        <Button mode="outlined" onPress={() => navigation.navigate('SignUp')}>
-          Not a member?  Register
-        </Button>
+        <Link href={"/loggedOut/signUp"} asChild>
+          <TouchableOpacity>
+            <Text>Not a member?  Register</Text>
+          </TouchableOpacity>
+        </Link>
       </View>
-      </>
+    </>
   );
 };
 
@@ -44,7 +48,7 @@ const styles = StyleSheet.create({
 
   container: {
     flex: 1,
-    backgroundColor: '#5271ff', 
+    backgroundColor: '#5271ff',
     alignItems: 'center',
     justifyContent: 'center',
   },

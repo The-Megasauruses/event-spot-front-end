@@ -54,7 +54,7 @@ const styles = {
   list: {
     height: '80%',
     width: "80%",
-    borderRadius: 20,
+    // borderRadius: 20,
   },
   card: {
     backgroundColor: "#add8e6",

@@ -15,12 +15,13 @@ import { PaperProvider, MD3LightTheme as DefaultTheme } from "react-native-paper
 //   },
 // };
 
+
 const LoggedInLayout = () => {
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar style="dark" backgroundColor="#5271FF" />
       <Header />
-      <PaperProvider>
+      <PaperProvider >
         <Slot />
       </PaperProvider>
     </SafeAreaView>
