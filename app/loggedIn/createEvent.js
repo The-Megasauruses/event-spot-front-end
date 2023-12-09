@@ -119,7 +119,7 @@ const CreateEvent = () => {
       <Button
         mode="contained"
         style={styles.button}
-        onPress={() => console.log("Add the event to the DB")}
+        onPress={() => console.log("Add the form variable to the DB")}
       >
         Publish
       </Button>

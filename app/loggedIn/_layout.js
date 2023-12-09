@@ -2,7 +2,7 @@ import { Slot } from "expo-router";
 import Header from "./components/header";
 import { SafeAreaView, StyleSheet } from "react-native";
 import { StatusBar } from "expo-status-bar";
-import { PaperProvider, MD3LightTheme as DefaultTheme } from "react-native-paper";
+import { PaperProvider } from "react-native-paper";
 
 // const theme = {
 //   ...DefaultTheme,
