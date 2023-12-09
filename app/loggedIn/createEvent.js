@@ -1,6 +1,7 @@
 import { View, Text } from "react-native";
 import { Button } from "react-native-paper";
 import React from "react";
+import { EventModel } from "../store/fireStoreClassModel";
 
 const CreateEvent = () => {
   return (
