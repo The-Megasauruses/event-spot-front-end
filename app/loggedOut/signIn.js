@@ -1,20 +1,37 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Link } from 'expo-router';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, Redirect } from 'expo-router';
+
 
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = React.useState(false)
 
   const handleSignInButton = () => {
-
+    const auth = getAuth();
     console.log('Signing in with:', email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('logged in')
+        const user = userCredential;
+        setLoggedIn(true);
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message
+        console.log(error)
+      })
   };
 
   return (
     <>
+    {loggedIn && 
+          <Redirect href="/loggedIn/home" />
+    }
       <View>
         <Text>Sign In</Text>
         <TextInput

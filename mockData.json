@@ -2,25 +2,43 @@
     {
       "id": 1,
       "title": "Event Title 1",
-      "date": "Date: 1/23/24 @ 5:00pm",
+      "host": "Rhett Beardemphl",
+      "eventURL": "https://event-spot.com/events/518712",
       "location": "Location: 1234 Street Ave, Seattle WA",
-      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "imgPath": "https://picsum.photos/699"
+      "description": "Quis blandit turpis cursus in. Pellentesque diam volutpat commodo sed. Sit amet volutpat consequat mauris nunc congue. Sed nisi lacus sed viverra.",
+      "tags": ["programming", "tech"],
+      "happening_at": "Date: 1/23/24 @ 5:00pm",
+      "created_at": "2023-12-09 00:44:12Z",
+      "updated_at": "2023-12-09 06:44:12Z",
+      "imgPath": "https://picsum.photos/699",
+      "attendees": ["Ray Ruazol", "Lacey Washington"]
     },
     {
       "id": 2,
       "title": "Event Title 2",
-      "date": "Date: 1/23/24 @ 5:00pm",
+      "host": "Ray Ruazol",
+      "eventURL": "https://event-spot.com/events/518422",
       "location": "Location: 1234 Street Ave, Seattle WA",
-      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "imgPath": "https://picsum.photos/701"
+      "description": "Diam phasellus vestibulum lorem sed risus. Sit amet mattis vulputate enim nulla aliquet.",
+      "tags": ["programming", "tech"],
+      "happening_at": "Date: 1/23/24 @ 5:00pm",
+      "created_at": "2023-12-09 00:44:12Z",
+      "updated_at": "2023-12-09 06:44:12Z",
+      "imgPath": "https://picsum.photos/701",
+      "attendees": ["Rhett Beardemphl", "Lacey Washington"]
     },
     {
       "id": 3,
       "title": "Event Title 3",
-      "date": "Date: 1/23/24 @ 5:00pm",
+      "host": "Lacey Washington",
+      "eventURL": "https://event-spot.com/events/518722",
       "location": "Location: 1234 Street Ave, Seattle WA",
-      "description": "Description: Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-      "imgPath": "https://picsum.photos/700"
+      "description": "Varius vel pharetra vel turpis nunc. Tellus pellentesque eu tincidunt tortor aliquam nulla facilisi. Consectetur purus ut faucibus pulvinar. Sapien nec sagittis aliquam malesuada bibendum arcu vitae elementum. Ipsum dolor sit amet consectetur adipiscing elit pellentesque habitant morbi. Sit amet tellus cras adipiscing enim eu turpis",
+      "tags": ["programming", "tech"],
+      "happening_at": "Date: 1/23/24 @ 5:00pm",
+      "created_at": "2023-12-09 00:44:12Z",
+      "updated_at": "2023-12-09 06:44:12Z",
+      "imgPath": "https://picsum.photos/701",
+      "attendees": ["Rheet Beardemphl", "Lacey Washington"]
     }
   ]
