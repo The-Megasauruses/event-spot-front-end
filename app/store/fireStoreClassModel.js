@@ -71,8 +71,6 @@ class EventModel {
     description,
     tags,
     happeningAt,
-    createdAt,
-    updatedAt,
     imgPath,
     attendees
   ) {
@@ -83,8 +81,7 @@ class EventModel {
     this.description = description;
     this.tags = tags || [];
     this.happeningAt = happeningAt;
-    this.createdAt = createdAt;
-    this.updatedAt = updatedAt;
+    this.createdAt = Date.now();
     this.imgPath = imgPath;
     this.attendees = attendees || [];
   }

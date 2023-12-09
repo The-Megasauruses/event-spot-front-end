@@ -59,9 +59,14 @@ const styles = StyleSheet.create({
     marginBottom: "3%",
     textAlign: "center",
   },
-  button: {
+  button: Platform.OS === "ios"
+  ? {
     backgroundColor: "#663399",
     borderRadius: "30%",
+    padding: 5,
+    marginTop: "3%",
+  } : {
+    backgroundColor: "#663399",
     padding: 5,
     marginTop: "3%",
   },

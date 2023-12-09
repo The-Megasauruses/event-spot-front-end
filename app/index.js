@@ -24,5 +24,6 @@ const index = () => {
   } else {
     return <Redirect href="/loggedOut/signIn" />
   }
+}
 
-export default index
+export default index;
