@@ -1,6 +1,8 @@
 import { Text, TextInput, View } from "react-native";
 import { Button } from "react-native-paper";
+import { EventModel } from "../store/fireStoreClassModel";
 import { useState, useEffect } from "react";
+
 
 const CreateEvent = () => {
 

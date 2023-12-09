@@ -24,16 +24,5 @@ const index = () => {
   } else {
     return <Redirect href="/loggedOut/signIn" />
   }
-}
-
-// const index = () => {
-//   [loggedIn, setLoggedIn] = React.useState(false)
-//   const auth = getAuth();
-//   if(loggedIn){
-//     console.log('loggedin')
-//   } else {
-//     return <Redirect href="/loggedOut/signIn" />
-//   }
-// }
 
 export default index
