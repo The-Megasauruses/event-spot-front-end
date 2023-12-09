@@ -1,19 +1,28 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import { Redirect } from 'expo-router'
-import firestore from '@react-native-firebase/firestore';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
+
 
 const index = () => {
-  const [userData, setUserData] = useState(null);
-  const [eventData, setEventDat] = useState(null);
-  const [loading, setLoading] = useState(true);
-
+  [loggedIn, setLoggedIn] = React.useState(false)
+  
   useEffect(() => {
-   
-  })
+    const auth = getAuth();
+    const unsubscribe = onAuthStateChanged(auth, user => {
+      if(user) {
+        setLoggedIn(true)
+      } else {
+        setLoggedIn(false);
+      }
+    })
 
-  return (
-    <Redirect href="/loggedIn/home" />
-  )
-}
+    return () => unsubscribe();
+  }, []);
+
+  if (loggedIn) {
+    return <Redirect href="/loggedIn/home" />
+  } else {
+    return <Redirect href="/loggedOut/signIn" />
+  }
 
 export default index

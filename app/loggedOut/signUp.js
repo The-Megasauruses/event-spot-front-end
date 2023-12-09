@@ -25,21 +25,22 @@ const auth = getAuth();
   return (
     <>
     <View>
-      <Text>Sign Up</Text>
-      <View style={styles.inputView}>
+      <View>
         <TextInput
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          style={styles.inputView}
         />
       <TextInput
         placeholder="Password"
         secureTextEntry
         value={password}
         onChangeText={(text) => setPassword(text)}
+        style={styles.inputView}
       />
       </View>
-      <Button title="Sign Up" mode="outlined" onPress={handleSignUp}>
+      <Button mode="contained" onPress={handleSignUp} buttonColor="#354aad">
         Sign Up
       </Button>
     </View>
@@ -56,11 +57,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputView: {
-    backgroundColor: "#5271ff",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
+    backgroundColor: "#ffffff",
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
     alignItems: "center",
   },
   TextInput: {
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button: {
-    color: 'black'
+    color: '#ffffff',
   }
 })
 

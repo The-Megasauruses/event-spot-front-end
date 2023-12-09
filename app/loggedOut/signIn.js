@@ -1,37 +1,55 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { Link } from 'expo-router';
+import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { Link, Redirect } from 'expo-router';
+
 
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loggedIn, setLoggedIn] = React.useState(false)
 
   const handleSignInButton = () => {
-
+    const auth = getAuth();
     console.log('Signing in with:', email, password);
+    signInWithEmailAndPassword(auth, email, password)
+      .then((userCredential) => {
+        console.log('logged in')
+        const user = userCredential;
+        setLoggedIn(true);
+      })
+      .catch(error => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        console.log(error)
+      })
   };
 
   return (
     <>
+    {loggedIn && 
+          <Redirect href="/loggedIn/home" />
+    }
       <View>
-        <Text>Sign In</Text>
         <TextInput
           placeholder="Email"
           value={email}
           onChangeText={(text) => setEmail(text)}
+          style={styles.inputView}
         />
         <TextInput
           placeholder="Password"
           secureTextEntry
           value={password}
           onChangeText={(text) => setPassword(text)}
+          style={styles.inputView}
         />
       </View>
 
       <View style={styles.button}>
-        <Button mode="outlined" onPress={handleSignInButton}>
+        <Button mode="contained" buttonColor="#354aad" onPress={handleSignInButton}>
           Sign In
         </Button>
         <Link href={"/loggedOut/signUp"} asChild>
@@ -53,11 +71,11 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
   inputView: {
-    backgroundColor: "#5271ff",
-    borderRadius: 30,
-    width: "70%",
-    height: 45,
-    marginBottom: 20,
+    backgroundColor: "#ffffff",
+    height: 40,
+    margin: 12,
+    borderWidth: 1,
+    padding: 10,
     alignItems: "center",
   },
   TextInput: {
@@ -67,7 +85,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button: {
-    color: 'black'
+    color: '#ffffff',
   }
 
 });

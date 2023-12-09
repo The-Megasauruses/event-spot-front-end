@@ -3,11 +3,28 @@ import { View, Text, StyleSheet, FlatList, Image, Button } from 'react-native';
 import UserAvatar from "./components/userAvatar.js";
 import mockData from '../../mockData.json';
 import { Card, Title, Paragraph } from "react-native-paper";
+import { getAuth, signOut } from "firebase/auth";
+import { Redirect } from 'expo-router';
 
 const Profile = () => {
+  const auth = getAuth();
+  const [loggedIn, setLoggedIn] = React.useState(true)
+
+
+  const handleSignOut = () => {
+    signOut(auth).then(() => {
+      console.log('Sign-out successful.')
+      setLoggedIn(false)
+    }).catch((error) => {
+      // An error happened.
+      console.log('something happened', error)
+    });
+  }
   return (
     <View style={styles.container}>
-
+    {!loggedIn && 
+          <Redirect href="/loggedOut/signIn" />
+    }
       <View style={styles.avatarContainer}>
         <UserAvatar />
       </View>
@@ -15,7 +32,11 @@ const Profile = () => {
         <Text style={styles.userName}>John Doe</Text>
         <Text style={styles.userEmail}>john.doe@example.com</Text>
         {/* Add more profile information as needed */}
+        <View style={styles.button}>
+          <Button title='Log out' color='#fff' onPress={handleSignOut} />
+        </View>
       </View>
+
 
       <Text style={styles.title}>My Events</Text>
       <FlatList
@@ -27,7 +48,7 @@ const Profile = () => {
             <Card.Content>
               <Title style={styles.spacing}>{item.title}</Title>
               <Image
-                source={{ uri: item.imgPath }} 
+                source={{ uri: item.imgPath }}
                 style={styles.image}
               />
               <Paragraph style={styles.spacing}>
@@ -40,7 +61,7 @@ const Profile = () => {
                 {item.description}
               </Paragraph>
               <View style={styles.button}>
-                <Button title='Cancel' color='#fff' onPress={() => console.log('This button should link to Create Event page')}/>
+                <Button title='Cancel' color='#fff' onPress={() => console.log('This button should link to Create Event page')} />
               </View>
             </Card.Content>
           </Card>
