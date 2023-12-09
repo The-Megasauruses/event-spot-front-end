@@ -7,8 +7,9 @@ import mockData from "../../mockData.json";
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
-  const [numberOfItemsPerPage, onItemsPerPageChange] = useState(10); 
+  const [numberOfItemsPerPage, onItemsPerPageChange] = useState(10);  npm 
   const [filteredData, setFilteredData] = useState([]);
+
 
   useEffect(() => {
   
@@ -23,6 +24,8 @@ const Search = () => {
     filterData();
   }, [searchQuery]);
 
+  on
+
   return (
     <>
     <Searchbar
@@ -33,7 +36,7 @@ const Search = () => {
     <FlatList
       style={styles.list}
       data={filteredData}
-      keyExtractor={(item) => item.id.toString()} // Ensure the key is a string
+      keyExtractor={(item) => item.id.toString()}
       renderItem={({ item }) => (
         <Card style={styles.card}>
           <Card.Content>

@@ -81,7 +81,7 @@ const styles = {
   },
   button: {
     backgroundColor: "#663399",
-    borderRadius: '30%',
+    // borderRadius: '30%',
     padding: 10,
     marginTop: '4%',
   },
