@@ -31,7 +31,7 @@ const Profile = () => {
                 style={styles.image}
               />
               <Paragraph style={styles.spacing}>
-                {item.date}
+                {item.happening_at}
               </Paragraph>
               <Paragraph style={styles.spacing}>
                 {item.location}

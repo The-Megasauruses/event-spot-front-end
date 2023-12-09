@@ -17,6 +17,17 @@ import { PaperProvider, MD3LightTheme as DefaultTheme } from "react-native-paper
 
 
 
+// const theme = {
+//   ...DefaultTheme,
+//   // Specify custom property
+//   myOwnProperty: true,
+//   // Specify custom property in nested object
+//   colors: {
+//     ...DefaultTheme.colors,
+//     myOwnColor: '#ADD8E6',
+//   },
+// };
+
 const LoggedInLayout = () => {
   return (
     <SafeAreaView style={styles.container}>
