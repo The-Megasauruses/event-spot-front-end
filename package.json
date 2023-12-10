@@ -21,6 +21,7 @@
     "@rneui/themed": "^4.0.0-rc.8",
     "expo": "~49.0.15",
     "expo-constants": "~14.4.2",
+    "expo-dev-client": "^2.4.12",
     "expo-firebase": "^0.0.0-alpha.0",
     "expo-linking": "~5.0.2",
     "expo-router": "^2.0.0",
