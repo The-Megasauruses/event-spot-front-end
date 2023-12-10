@@ -5,6 +5,7 @@ import mockData from "../../mockData.json";
 import { Card, Title, Paragraph } from "react-native-paper";
 import { getAuth, signOut } from "firebase/auth";
 import { Redirect } from "expo-router";
+import { EventModel, UserModel } from "../store/fireStoreClassModel.js";
 
 const Profile = () => {
   const auth = getAuth();
