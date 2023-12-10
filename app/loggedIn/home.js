@@ -51,11 +51,16 @@ const styles = {
     marginVertical: "5%", 
     alignItems: "center",
   },
-  list: {
+  list: Platform.OS === "ios" ?
+  {
     height: '80%',
     width: "80%",
-    // borderRadius: 20,
-  },
+    borderRadius: 20,
+  } : {
+    height: '80%',
+    width: "80%",
+  } ,
+
   card: {
     backgroundColor: "#add8e6",
     marginVertical: 5,
@@ -79,12 +84,16 @@ const styles = {
     resizeMode: "cover",
     marginBottom: '3%',
   },
-  button: {
+  button:  Platform.OS === "ios" ? {
     backgroundColor: "#663399",
-    // borderRadius: '30%',
+    borderRadius: '30%',
     padding: 10,
     marginTop: '4%',
-  },
+  } : {
+    backgroundColor: "#663399",
+    padding: 10,
+    marginTop: '4%',
+  } ,
   buttonText: {
     color: 'white',
     fontSize: 18,
