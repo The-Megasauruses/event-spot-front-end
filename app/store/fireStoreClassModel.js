@@ -1,10 +1,16 @@
-import firestore from "@react-native-firebase/firestore";
+import { db } from "../../config";
 
-class UserModel {
-  constructor(firstName, lastName, email, homeTown, phone, avatarUrl, events) {
-    this.firstName = firstName;
-    this.lastName = lastName;
+class User {
+  constructor(
+    userName = null,
+    email = null,
+    homeTown = null,
+    phone = null,
+    avatarUrl = null,
+    events
+  ) {
     this.email = email;
+    this.userName = userName;
     this.homeTown = homeTown;
     this.phone = phone;
     this.avatarUrl = avatarUrl;
@@ -13,9 +19,9 @@ class UserModel {
 
   static async addUser(userId, userData) {
     try {
-      const userRef = firestore().collection("users").doc(userId);
-      const newUser = new UserModel(...userData);
-      await userRef.set(newUser);
+      const userRef = db.collection("users").doc(userId);
+      const newUser = new User(...userData);
+      await userRef.set({ newUser });
       console.log("User added to Firestore successfully");
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
@@ -24,7 +30,7 @@ class UserModel {
 
   static async getUser(userId) {
     try {
-      const userRef = firestore().collection("users").doc(userId);
+      const userRef = db.collection("users").doc(userId);
       const userSnapshot = await userRef.get();
 
       if (userSnapshot.exists) {
@@ -42,9 +48,9 @@ class UserModel {
     }
   }
 
-  static async addEventToUser(userId, EventId) {
+  static async addEventToUser(userId, eventId) {
     try {
-      const userRef = firestore().collection("user").doc(userId);
+      const userRef = db.collection("users").doc(userId);
       const userSnapshot = await userRef.get();
 
       if (userSnapshot.exists) {
@@ -62,13 +68,13 @@ class UserModel {
   }
 }
 
-class EventModel {
+class Event {
   constructor(
     title,
     host,
     eventURL,
     location,
-    description,
+    description=null,
     tags,
     happeningAt,
     imgPath,
@@ -88,7 +94,7 @@ class EventModel {
 
   static async addEvent(eventData) {
     try {
-      const eventsRef = firestore().collection("events");
+      const eventsRef = db.collection("events");
       const newEventRef = await eventsRef.add(eventData);
       console.log(
         "Event added to Firestore successfully with ID:",
@@ -103,7 +109,7 @@ class EventModel {
 
   static async getEventById(eventId) {
     try {
-      const eventRef = firestore().collection("events").doc(eventId);
+      const eventRef = db.collection("events").doc(eventId);
       const eventSnapshot = await eventRef.get();
 
       if (eventSnapshot.exists) {
@@ -122,7 +128,7 @@ class EventModel {
 
   static async updateEvent(eventId, updatedEventData) {
     try {
-      const eventRef = firestore().collection("events").doc(eventId);
+      const eventRef = db.collection("events").doc(eventId);
       await eventRef.update(updatedEventData);
       console.log("Event updated in Firestore successfully");
     } catch (error) {
@@ -132,7 +138,7 @@ class EventModel {
 
   static async removeEvent(eventId) {
     try {
-      const eventRef = firestore().collection("events").doc(eventId);
+      const eventRef = db.collection("events").doc(eventId);
       await eventRef.delete();
       console.log("Event deleted from Firestore successfully");
     } catch (error) {
@@ -143,15 +149,15 @@ class EventModel {
   //   example input would be:
   //  const criteria1 = { tile: 'event 1' } or const criteria = {host: 'rhett' }
   //  usage:
-  //  const matchingEvents = await EventModel.serchEvents(criteria1)
+  //  const matchingEvents = await Event.serchEvents(criteria1)
   static async searchEvents(criteria) {
     try {
-      const eventsRef = firestore().collection("events");
+      const eventsRef = db.collection("events");
       let queryRef = eventsRef;
       Object.entries(criteria).forEach(([field, value]) => {
         queryRef = queryRef.where(field, ">=", value);
       });
-
+      const querySnapshot = await queryRef.get(); 
       const events = [];
 
       querySnapshot.forEach((doc) => {
@@ -168,4 +174,4 @@ class EventModel {
   }
 }
 
-export { UserModel, EventModel };
+export { User, Event };
