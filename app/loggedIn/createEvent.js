@@ -2,7 +2,6 @@ import { Text, TextInput, View } from "react-native";
 import { Button } from "react-native-paper";
 // import { EventModel } from "../store/fireStoreClassModel";
 import { useState, useEffect } from "react";
-import { getAuth } from "firebase/auth";
 
 const CreateEvent = () => {
 
@@ -49,11 +48,7 @@ const CreateEvent = () => {
     setForm({...form, tags: tagsArr})
   }, [tagString])
 
-  let auth = getAuth();
-
-  console.log(auth);
-
-  console.log(form);
+  // console.log(form);
 
   return (
     <View style={styles.container}>
