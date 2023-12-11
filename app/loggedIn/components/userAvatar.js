@@ -1,12 +1,15 @@
 import React from 'react';
-// import { useSelector } from 'react-redux';
 import { Avatar } from 'react-native-paper';
+import { getAuth } from 'firebase/auth';
 
 const UserAvatar = () => {
-//   const { firstName, lastName, avatarUrl } = useSelector((state) => state.user);
-    let avatarUrl = null;
-    let firstName = "John";
-    let lastName = "Doe";
+  const auth = getAuth();
+  const user = auth.currentUser;
+  const nameArr = user.displayName.split(' ')
+
+  let avatarUrl = user.photoURL;
+  let firstName = nameArr[0];
+  let lastName = nameArr[1];
 
   // Display the image if available, otherwise show initials
   const content = avatarUrl ? (

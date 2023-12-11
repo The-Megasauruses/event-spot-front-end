@@ -1,4 +1,5 @@
 import { db } from "../../config";
+import {collection,  setDoc, addDoc, updateDoc} from "firebase/firestore"
 
 class User {
   constructor(
@@ -17,18 +18,19 @@ class User {
     this.events = events || [];
   }
 
-  static async addUser(userId, userData) {
+  async addUser(userData) {
     try {
-      const userRef = db.collection("users").doc(userId);
+      // const userRef = collection(db ,"users").doc(userId);
+      const userCollection = collection(db, 'users' );
       const newUser = new User(...userData);
-      await userRef.set({ newUser });
-      console.log("User added to Firestore successfully");
+      const userRef = await addDoc(userCollection, newUser)
+      console.log("User added to Firestore successfully doc path", userRef.id);
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }
   }
 
-  static async getUser(userId) {
+  async getUser(userId) {
     try {
       const userRef = db.collection("users").doc(userId);
       const userSnapshot = await userRef.get();
@@ -48,7 +50,7 @@ class User {
     }
   }
 
-  static async addEventToUser(userId, eventId) {
+  async addEventToUser(userId, eventId) {
     try {
       const userRef = db.collection("users").doc(userId);
       const userSnapshot = await userRef.get();
@@ -69,33 +71,28 @@ class User {
 }
 
 class Event {
-  constructor(
+  constructor({
     title,
-    host,
-    eventURL,
     location,
-    description=null,
+    description,
     tags,
-    happeningAt,
-    imgPath,
-    attendees
-  ) {
+    happening_at,
+    imgPath
+  }) {
     this.title = title;
-    this.host = host;
-    this.eventURL = eventURL;
     this.location = location;
     this.description = description;
-    this.tags = tags || [];
-    this.happeningAt = happeningAt;
+    this.tags = tags ;
+    this.happening_at = happening_at;
     this.createdAt = Date.now();
     this.imgPath = imgPath;
-    this.attendees = attendees || [];
+    this.attendees = [];
   }
 
-  static async addEvent(eventData) {
+  async addEvent() {
     try {
-      const eventsRef = db.collection("events");
-      const newEventRef = await eventsRef.add(eventData);
+      const eventsRef = collection(db ,"events");
+      const newEventRef = await addDoc(eventsRef , {...this});
       console.log(
         "Event added to Firestore successfully with ID:",
         newEventRef.id
@@ -107,7 +104,7 @@ class Event {
     }
   }
 
-  static async getEventById(eventId) {
+  async getEventById(eventId) {
     try {
       const eventRef = db.collection("events").doc(eventId);
       const eventSnapshot = await eventRef.get();
@@ -126,7 +123,7 @@ class Event {
     }
   }
 
-  static async updateEvent(eventId, updatedEventData) {
+  async updateEvent(eventId, updatedEventData) {
     try {
       const eventRef = db.collection("events").doc(eventId);
       await eventRef.update(updatedEventData);
@@ -136,7 +133,7 @@ class Event {
     }
   }
 
-  static async removeEvent(eventId) {
+  async removeEvent(eventId) {
     try {
       const eventRef = db.collection("events").doc(eventId);
       await eventRef.delete();
@@ -150,7 +147,7 @@ class Event {
   //  const criteria1 = { tile: 'event 1' } or const criteria = {host: 'rhett' }
   //  usage:
   //  const matchingEvents = await Event.serchEvents(criteria1)
-  static async searchEvents(criteria) {
+  async searchEvents(criteria) {
     try {
       const eventsRef = db.collection("events");
       let queryRef = eventsRef;

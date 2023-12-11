@@ -29,8 +29,8 @@ const Profile = () => {
         <UserAvatar />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.userName}>John Doe</Text>
-        <Text style={styles.userEmail}>john.doe@example.com</Text>
+        <Text style={styles.userName}>{auth.currentUser.displayName || 'Profile Name'}</Text>
+        <Text style={styles.userdata}>{auth.currentUser.email}</Text>
         {/* Add more profile information as needed */}
         <View style={styles.button}>
           <Button title="Log out" color="#fff" onPress={handleSignOut} />
@@ -91,7 +91,7 @@ const styles = StyleSheet.create({
     fontSize: 24,
     fontWeight: "bold",
   },
-  userEmail: {
+  userdata: {
     fontSize: 16,
     color: "black",
   },
