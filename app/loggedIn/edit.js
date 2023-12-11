@@ -1,6 +1,7 @@
-import { View, Text, StyleSheet, TextInput, Button } from "react-native";
+import { View, Text, StyleSheet, TextInput, Button, Alert } from "react-native";
 import { getAuth, updateProfile } from "firebase/auth";
 import { useState } from "react";
+import { router } from "expo-router";
 
 const Edit = () => {
   const [email, setEmail] = useState("");
@@ -19,13 +20,14 @@ const Edit = () => {
         .then(() => {
           console.log("Profile name/photo updated!");
           console.log(user.displayName, user.photoURL);
+          router.back();
         })
         .catch((error) => {
-          console.log("Profile did not update!", error.message);
+          Alert.alert('Error', error.message)
         });
     }
 
-  console.log(user);
+  // console.log(user);
 
   return (
     <View style={styles.container}>
