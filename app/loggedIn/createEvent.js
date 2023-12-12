@@ -1,7 +1,30 @@
 import { Text, TextInput, View } from "react-native";
 import { Button } from "react-native-paper";
-// import { EventModel } from "../store/fireStoreClassModel";
+import { Event } from "../store/fireStoreClassModel";
+import {db} from "../../config";
 import { useState, useEffect } from "react";
+
+// constructor(
+//   title,
+//   host,
+//   eventURL,
+//   location,
+//   description=null,
+//   tags,
+//   happeningAt,
+//   imgPath,
+//   attendees
+// ) {
+//   this.title = title;
+//   this.host = host;
+//   this.eventURL = eventURL;
+//   this.location = location;
+//   this.description = description;
+//   this.tags = tags || [];
+//   this.happeningAt = happeningAt;
+//   this.createdAt = Date.now();
+//   this.imgPath = imgPath;
+//   this.attendees = attendees || [];
 
 const CreateEvent = () => {
 
@@ -48,7 +71,15 @@ const CreateEvent = () => {
     setForm({...form, tags: tagsArr})
   }, [tagString])
 
-  // console.log(form);
+  const handlePublish = async () => {
+    try {
+      const newEvent = new Event({...form}); 
+      const eventId = newEvent.addEvent();
+      console.log("Event added with ID:", eventId);
+    } catch (error) {
+      console.error("Error adding event:", error);
+    }
+  };
 
   return (
     <View style={styles.container}>
@@ -120,7 +151,7 @@ const CreateEvent = () => {
       <Button
         mode="contained"
         style={styles.button}
-        onPress={() => console.log("Add the form variable to the DB")}
+        onPress={() => handlePublish(form)}
       >
         Publish
       </Button>
@@ -150,12 +181,16 @@ const styles = {
     borderBottomColor: "#663399",
     borderBottomWidth: 1,
   },
-  button: {
+  button: Platform.OS === "ios" ? {
     backgroundColor: "#663399",
     borderRadius: "30%",
     padding: 5,
     marginTop: "4%",
-  },
+  }: {
+    backgroundColor: "#663399",
+    padding: 5,
+    marginTop: "4%",
+  } ,
 };
 
 export default CreateEvent;
