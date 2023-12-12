@@ -42,18 +42,12 @@ const CreateEvent = () => {
   });
 
   let [form, setForm] = useState({
-    // "id": 1,
     title: "",
-    // host: "",
-    // "eventURL": "https://event-spot.com/events/518712",
     location: "",
     description: "",
     tags: [],
     happening_at: "",
-    // created_at: "",
-    // updated_at: "",
     imgPath: "",
-    // "attendees": []
   });
 
   useEffect(() => {
