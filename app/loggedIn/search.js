@@ -1,99 +1,141 @@
 import React, { useState, useEffect } from "react";
-import { Searchbar, Card, Title, Paragraph, Button, DataTable } from "react-native-paper";
+import {
+  Searchbar,
+  Card,
+  Title,
+  Paragraph,
+  Button,
+  DataTable,
+} from "react-native-paper";
 import { FlatList, Image } from "react-native";
-import mockData from "../../mockData.json";
+import { query, collection, where, limit, getDocs } from "firebase/firestore";
+import { debounce } from "lodash";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
   const [page, setPage] = useState(0);
-  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10); // Corrected the function name
+  const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
   const [filteredData, setFilteredData] = useState([]);
+  const [loading, setLoading] = useState(false);
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
   };
 
+  const filterData = async () => {
+    try {
+      setLoading(true);
+
+      const events = [];
+      console.log("this is in the search useEffect:", searchQuery);
+
+      const queryRef = query(
+        collection(db, "events"),
+        where("title", ">=", searchQuery),
+        limit(20)
+      );
+
+      const querySnapshot = await getDocs(queryRef);
+
+      querySnapshot.forEach((doc) => {
+        const eventData = doc.data();
+        events.push(eventData);
+      });
+
+      setFilteredData(events);
+    } catch (error) {
+      console.error("Error searching events:", error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const debouncedFilterData = debounce(filterData, 300);
+
   useEffect(() => {
-    const filterData = async () => {
-      try {
-        const criteria = { title: searchQuery }; 
-        const events = await EventModel.searchEvents(criteria);
-        setFilteredData(events);
-      } catch (error) {
-        console.error("Error searching events:", error);
-      }
-    };
-
-    filterData();
+    debouncedFilterData();
   }, [searchQuery]);
-
   const from = page * numberOfItemsPerPage + 1;
   const to = (page + 1) * numberOfItemsPerPage;
   const displayedItems = filteredData.slice(from - 1, to);
 
   return (
     <>
-    <Searchbar
-      placeholder="Search"
-      onChangeText={onChangeSearch}
-      value={searchQuery}
-    />
-    <FlatList
-      style={styles.list}
-      data={displayedItems}
-      keyExtractor={(item) => item.id.toString()}
-      renderItem={({ item }) => (
-        <Card style={styles.card}>
-          <Card.Content>
-            <Title style={styles.spacing}>{item.title}</Title>
-            <Image source={{ uri: item.imgPath }} style={styles.image} />
-            <Paragraph style={styles.spacing}>{item.date}</Paragraph>
-            <Paragraph style={styles.spacing}>{item.location}</Paragraph>
-            <Paragraph style={styles.spacing}>{item.description}</Paragraph>
-            <Button
-              mode="contained"
-              style={{ width: "40%" }}
-              onPress={() =>
-                console.log("This button should add this to my events")
-              }
-            >
-              join
-            </Button>
-          </Card.Content>
-        </Card>
-      )}
-    />
-    <DataTable>
-      <DataTable.Pagination
-        page={page}
-        numberOfPages={Math.ceil(filteredData.length / numberOfItemsPerPage)}
-        onPageChange={(page) => setPage(page)}
-        label={`${from}-${to} of ${filteredData.length}`}
-        showFastPaginationControls
-        numberOfItemsPerPageList={[10, 20, 30]}
-        numberOfItemsPerPage={numberOfItemsPerPage}
-        onItemsPerPageChange={(itemsPerPage) => setNumberOfItemsPerPage(itemsPerPage)}
-        selectPageDropdownLabel={"Rows per page"}
+      <Searchbar
+        placeholder="Search"
+        onChangeText={onChangeSearch}
+        value={searchQuery}
       />
-    </DataTable>
-  </>
+      {loading ? (
+        <ActivityIndicator animating={true} color="#000" />
+      ) : (
+        <view>
+          <FlatList
+            style={styles.list}
+            data={displayedItems}
+            keyExtractor={(item) => item.id.toString()}
+            renderItem={({ item }) => (
+              <Card style={styles.card}>
+                <Card.Content>
+                  <Title style={styles.spacing}>{item.title}</Title>
+                  <Image source={{ uri: item.imgPath }} style={styles.image} />
+                  <Paragraph style={styles.spacing}>{item.date}</Paragraph>
+                  <Paragraph style={styles.spacing}>{item.location}</Paragraph>
+                  <Paragraph style={styles.spacing}>
+                    {item.description}
+                  </Paragraph>
+                  <Button
+                    mode="contained"
+                    style={{ width: "40%" }}
+                    onPress={() =>
+                      console.log("This button should add this to my events")
+                    }
+                  >
+                    join
+                  </Button>
+                </Card.Content>
+              </Card>
+            )}
+          />
+          <DataTable>
+            <DataTable.Pagination
+              page={page}
+              numberOfPages={Math.ceil(
+                filteredData.length / numberOfItemsPerPage
+              )}
+              onPageChange={(page) => setPage(page)}
+              label={`${from}-${to} of ${filteredData.length}`}
+              showFastPaginationControls
+              numberOfItemsPerPageList={[10, 20, 30]}
+              numberOfItemsPerPage={numberOfItemsPerPage}
+              onItemsPerPageChange={(itemsPerPage) =>
+                setNumberOfItemsPerPage(itemsPerPage)
+              }
+              selectPageDropdownLabel={"Rows per page"}
+            />
+          </DataTable>
+        </view>
+      )}
+    </>
   );
 };
 
 const styles = {
   container: {
-    marginVertical: "5%", 
+    marginVertical: "5%",
     alignItems: "center",
   },
-  list: Platform.OS === "ios" ?
-  {
-    height: '80%',
-    width: "80%",
-    borderRadius: 20,
-  } : {
-    height: '80%',
-    width: "80%",
-  } ,
+  list:
+    Platform.OS === "ios"
+      ? {
+          height: "80%",
+          width: "80%",
+          borderRadius: 20,
+        }
+      : {
+          height: "80%",
+          width: "80%",
+        },
 
   card: {
     backgroundColor: "#add8e6",
@@ -106,32 +148,35 @@ const styles = {
     textDecorationLine: "underline",
     textDecorationColor: "#663399",
     textDecorationStyle: "double",
-    marginBottom: '3%',
+    marginBottom: "3%",
     textAlign: "center",
   },
   spacing: {
-    marginBottom: '3%',
+    marginBottom: "3%",
   },
   image: {
-    width: '60%',
+    width: "60%",
     height: 60,
     resizeMode: "cover",
-    marginBottom: '3%',
+    marginBottom: "3%",
   },
-  button:  Platform.OS === "ios" ? {
-    backgroundColor: "#663399",
-    borderRadius: '30%',
-    padding: 10,
-    marginTop: '4%',
-  } : {
-    backgroundColor: "#663399",
-    padding: 10,
-    marginTop: '4%',
-  } ,
+  button:
+    Platform.OS === "ios"
+      ? {
+          backgroundColor: "#663399",
+          borderRadius: "30%",
+          padding: 10,
+          marginTop: "4%",
+        }
+      : {
+          backgroundColor: "#663399",
+          padding: 10,
+          marginTop: "4%",
+        },
   buttonText: {
-    color: 'white',
+    color: "white",
     fontSize: 18,
-  }
+  },
 };
 
 export default Search;
