@@ -5,9 +5,9 @@ import { getAuth } from 'firebase/auth';
 const UserAvatar = () => {
   const auth = getAuth();
   const user = auth.currentUser;
-  const nameArr = user.displayName ? user.displayName.split(' ') : null
+  const nameArr = user ? user.displayName.split(' ') : null
 
-  let avatarUrl = user.photoURL;
+  let avatarUrl = user ? user.photoURL : null;
   let firstName = nameArr ? nameArr[0] : 'None provided';
   let lastName = nameArr ? nameArr[1] : 'None provided';
 
