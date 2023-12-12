@@ -73,9 +73,7 @@ const CreateEvent = () => {
 
   const handlePublish = async () => {
     try {
-      console.log('this is the form', form);
       const newEvent = new Event({...form}); 
-      console.log("this is the newEvent data", newEvent);
       const eventId = newEvent.addEvent();
       console.log("Event added with ID:", eventId);
     } catch (error) {

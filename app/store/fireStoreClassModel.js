@@ -1,5 +1,5 @@
 import { db } from "../../config";
-import {collection,  setDoc, addDoc, updateDoc} from "firebase/firestore"
+import {collection, doc , addDoc, updateDoc, getDoc, deleteDoc } from "firebase/firestore"
 
 class User {
   constructor(
@@ -106,11 +106,11 @@ class Event {
 
   async getEventById(eventId) {
     try {
-      const eventRef = db.collection("events").doc(eventId);
-      const eventSnapshot = await eventRef.get();
-
-      if (eventSnapshot.exists) {
-        const eventData = eventSnapshot.data();
+      const eventRef = doc(db, "events", eventId);
+      const eventSnapshot = await getDoc(eventRef);
+  
+      if (!eventSnapshot.empty) {
+        const eventData = eventSnapshot.docs[0].data();
         console.log("Event data retrieved:", eventData);
         return eventData;
       } else {
@@ -122,12 +122,13 @@ class Event {
       return null;
     }
   }
-
+  
   async updateEvent(eventId, updatedEventData) {
     try {
-      const eventRef = db.collection("events").doc(eventId);
-      await eventRef.update(updatedEventData);
-      console.log("Event updated in Firestore successfully");
+      // const eventRef = db.collection("events").doc(eventId);
+      const eventRef = doc(db, "events", eventId);
+      await updateDoc(eventRef , {...updatedEventData});
+      console.log("Event updated in Firestore successfully with these fields changed:", updatedEventData);
     } catch (error) {
       console.error("Error updating event in Firestore:", error);
     }
@@ -135,9 +136,9 @@ class Event {
 
   async removeEvent(eventId) {
     try {
-      const eventRef = db.collection("events").doc(eventId);
-      await eventRef.delete();
-      console.log("Event deleted from Firestore successfully");
+      const eventRef = doc(db, "events", eventId )
+      await deleteDoc(eventRef);
+      console.log("Event deleted from Firestore successfully with id:", eventId );
     } catch (error) {
       console.error("Error deleting event from Firestore:", error);
     }
