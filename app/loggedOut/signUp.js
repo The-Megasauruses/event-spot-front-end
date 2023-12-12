@@ -18,7 +18,6 @@ const SignUpScreen = () => {
   useEffect(() => {
 
     validateForm();
-    console.log(errors)
   }, [displayName, email, password]);
 
 
