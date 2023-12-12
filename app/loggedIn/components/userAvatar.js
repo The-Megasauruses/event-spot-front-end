@@ -5,11 +5,11 @@ import { getAuth } from 'firebase/auth';
 const UserAvatar = () => {
   const auth = getAuth();
   const user = auth.currentUser;
-  const nameArr = user.displayName.split(' ')
+  const nameArr = user ? user.displayName.split(' ') : null
 
-  let avatarUrl = user.photoURL;
-  let firstName = nameArr[0];
-  let lastName = nameArr[1];
+  let avatarUrl = user ? user.photoURL : null;
+  let firstName = nameArr ? nameArr[0] : 'None provided';
+  let lastName = nameArr ? nameArr[1] : 'None provided';
 
   // Display the image if available, otherwise show initials
   const content = avatarUrl ? (
