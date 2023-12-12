@@ -1,4 +1,8 @@
 import React, { useState, useEffect } from "react";
+import {db} from "../../config";
+import { debounce } from "lodash";
+import { FlatList, Image, View } from "react-native";
+import { query, collection, where, limit, getDocs } from "firebase/firestore";
 import {
   Searchbar,
   Card,
@@ -6,10 +10,8 @@ import {
   Paragraph,
   Button,
   DataTable,
+  ActivityIndicator,
 } from "react-native-paper";
-import { FlatList, Image } from "react-native";
-import { query, collection, where, limit, getDocs } from "firebase/firestore";
-import { debounce } from "lodash";
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -69,11 +71,11 @@ const Search = () => {
       {loading ? (
         <ActivityIndicator animating={true} color="#000" />
       ) : (
-        <view>
+        <View>
           <FlatList
             style={styles.list}
             data={displayedItems}
-            keyExtractor={(item) => item.id.toString()}
+            keyExtractor={(item) => item.id}
             renderItem={({ item }) => (
               <Card style={styles.card}>
                 <Card.Content>
@@ -114,7 +116,7 @@ const Search = () => {
               selectPageDropdownLabel={"Rows per page"}
             />
           </DataTable>
-        </view>
+        </View>
       )}
     </>
   );
