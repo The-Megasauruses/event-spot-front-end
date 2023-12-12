@@ -2,16 +2,35 @@ import React from "react";
 import { View, Text, Platform, Image, FlatList, TouchableOpacity } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { Link } from 'expo-router';
+import { Event } from "../store/fireStoreClassModel";
 import mockData from '../../mockData.json';
+import { useState, useEffect } from "react";
 
 const Home = () => {
+
+  const [eventsList, setEventsList] = useState([]);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const events = await Event.getAllEvents();
+        setEventsList(events);
+      } catch (error) {
+        console.error("Error fetching events:", error);
+      }
+    };
+
+    fetchEvents();
+  }, []);
+
+  console.log(eventsList);
 
   return (
     <View style={styles.container}>
       <Text style={styles.title}>Upcoming Events</Text>
       <FlatList
         style={styles.list}
-        data={mockData}
+        data={eventsList}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <Card style={styles.card}>

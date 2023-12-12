@@ -1,8 +1,9 @@
-import { Text, TextInput, View } from "react-native";
+import { Text, TextInput, View, Alert } from "react-native";
 import { Button } from "react-native-paper";
 import { Event } from "../store/fireStoreClassModel";
 import { db } from "../../config";
 import { useState, useEffect } from "react";
+import { router } from "expo-router";
 
 // constructor(
 //   title,
@@ -75,8 +76,10 @@ const CreateEvent = () => {
       const newEvent = new Event({ ...form });
       const eventId = newEvent.addEvent();
       console.log("Event added with ID:", eventId);
+      router.back();
     } catch (error) {
-      console.error("Error adding event:", error);
+      console.error("Error adding event:", error.message);
+      Alert.alert("Error", error.message)
     }
   };
 

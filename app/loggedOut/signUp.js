@@ -7,8 +7,6 @@ import {app} from "../../config"
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-<<<<<<< Updated upstream
-=======
   const [displayName, setDisplayName] = useState("");
   const [validForm, setValidForm] = useState(false);
   const [errors, setErrors] = useState({})
@@ -32,7 +30,6 @@ const SignUpScreen = () => {
     setErrors(errors);
     setValidForm(Object.keys(errors).length === 0);
   }
->>>>>>> Stashed changes
 
   const handleSignUp = () => {
 const auth = getAuth();

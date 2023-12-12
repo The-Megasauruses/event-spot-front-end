@@ -1,5 +1,5 @@
 import { db } from "../../config";
-import {collection, doc , addDoc, updateDoc, getDoc, deleteDoc } from "firebase/firestore"
+import {collection, doc , addDoc, updateDoc, getDoc, getDocs, deleteDoc } from "firebase/firestore"
 
 class User {
   constructor(
@@ -120,6 +120,21 @@ class Event {
     } catch (error) {
       console.error("Error fetching event data:", error);
       return null;
+    }
+  }
+
+  static async getAllEvents() {
+    try {
+      const eventsRef = collection(db ,"events");
+      const querySnapshot = await getDocs(eventsRef);
+      const events = [];
+      querySnapshot.forEach((doc) => {
+        events.push({ id: doc.id, ...doc.data() });
+      });
+      console.log("Success, recieved events!", events);
+      return events;
+    } catch (error) {
+      console.error('Error fetching events:', error);
     }
   }
   
