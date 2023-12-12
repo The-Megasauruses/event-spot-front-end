@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
-import {app} from "../../config"
+import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { app } from "../../config";
+import { Link, Redirect } from 'expo-router';
+
 
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
@@ -16,7 +18,6 @@ const SignUpScreen = () => {
   useEffect(() => {
 
     validateForm();
-    // console.log(errors)
   }, [displayName, email, password]);
 
 
@@ -32,41 +33,70 @@ const SignUpScreen = () => {
   }
 
   const handleSignUp = () => {
-const auth = getAuth();
-    // Handle sign-up logic (e.g., call registration API)
-    console.log("Signing up with:", email, password);
-    console.log('auth', auth)
-    createUserWithEmailAndPassword(auth, email, password)
-      .then(userCredentials => {
-        const user = userCredentials.user;
-        console.log('Registered with:', user.email); 
-      })
-      .catch(error => alert(error.message))
-  
+    const auth = getAuth();
+    if (validForm) {
+      // Handle sign-up logic (e.g., call registration API)
+      console.log("Signing up with:", email, password);
+      console.log('auth', auth)
+      createUserWithEmailAndPassword(auth, email, password)
+        .then(userCredentials => {
+          const user = userCredentials.user;
+          console.log('Registered with:', user.email);
+          updateProfile(user, { displayName: displayName })
+          setLoggedIn(true);
+        })
+        .catch(error => alert(error.message))
+    }
+
   };
 
   return (
     <>
-    <View>
-      <View>
-        <TextInput
-          placeholder="Email"
-          value={email}
-          onChangeText={(text) => setEmail(text)}
-          style={styles.inputView}
-        />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={(text) => setPassword(text)}
-        style={styles.inputView}
-      />
+    {loggedIn && 
+        <Redirect href="/loggedIn/home" />
+    }
+      <View style={{ 'marginTop': 250 }}>
+        <View>
+          <TextInput
+            placeholder="Display Name"
+            value={displayName}
+            onChangeText={(text) => setDisplayName(text)}
+            style={styles.inputView}
+          />
+          {errors.displayName &&
+            <View style={styles.errorsView}>
+              <Text style={styles.errors}>{errors.displayName}</Text>
+            </View>
+          }
+          <TextInput
+            placeholder="Email"
+            value={email}
+            onChangeText={(text) => setEmail(text)}
+            style={styles.inputView}
+          />
+          {errors.email &&
+            <View style={styles.errorsView}>
+              <Text style={styles.errors}>{errors.email}</Text>
+            </View>
+          }
+
+          <TextInput
+            placeholder="Password"
+            secureTextEntry
+            value={password}
+            onChangeText={(text) => setPassword(text)}
+            style={styles.inputView}
+          />
+          {errors.password &&
+            <View style={styles.errorsView}>
+              <Text style={styles.errors}>{errors.password}</Text>
+            </View>
+          }
+        </View>
+        <Button mode="contained" onPress={handleSignUp} style={styles.button} buttonColor='#354aad'>
+          Sign Up
+        </Button>
       </View>
-      <Button mode="contained" onPress={handleSignUp} buttonColor="#354aad">
-        Sign Up
-      </Button>
-    </View>
     </>
   );
 };
@@ -76,8 +106,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#5271ff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: 'center'
   },
   inputView: {
     backgroundColor: "#ffffff",
@@ -94,8 +123,23 @@ const styles = StyleSheet.create({
     marginLeft: 20,
   },
   button: {
-    color: '#ffffff',
+    marginTop: 25,
+  },
+  errors: {
+    color: "#ff0033",
+    textAlign: "center",
+  },
+  errorsView: {
+    color: "#ff0033",
+    textAlign: "center",
+    alignItems: "center",
+    justifyContent: "center",
+    backgroundColor: "white",
+    opacity: 0.5,
+    width: 200,
+    marginLeft: 25
   }
+
 })
 
 export default SignUpScreen;

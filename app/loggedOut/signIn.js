@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
 import { Button } from 'react-native-paper';
-import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { Link, Redirect } from 'expo-router';
 
 
@@ -54,7 +54,7 @@ const SignInScreen = () => {
         </Button>
         <Link href={"/loggedOut/signUp"} asChild>
           <TouchableOpacity>
-            <Text>Not a member?  Register</Text>
+            <Text style={styles.signUp}>Not a member?  Register</Text>
           </TouchableOpacity>
         </Link>
       </View>
@@ -86,6 +86,10 @@ const styles = StyleSheet.create({
   },
   button: {
     color: '#ffffff',
+  },
+  signUp: {
+    marginTop: 25,
+    textAlign: 'center',
   }
 
 });

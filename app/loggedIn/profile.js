@@ -10,7 +10,8 @@ import { EventModel, UserModel } from "../store/fireStoreClassModel.js";
 const Profile = () => {
   const auth = getAuth();
   const [loggedIn, setLoggedIn] = React.useState(true);
-
+  console.log(auth);
+  console.log('logged in?', loggedIn)
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -23,14 +24,17 @@ const Profile = () => {
       });
   };
   return (
+    <>
+    {!loggedIn && 
+      <Redirect href="/loggedOut/signIn" />
+    }
     <View style={styles.container}>
-      {!loggedIn && <Redirect href="/loggedOut/signIn" />}
       <View style={styles.avatarContainer}>
         <UserAvatar />
       </View>
       <View style={styles.infoContainer}>
-        <Text style={styles.userName}>{auth.currentUser.displayName || 'Profile Name'}</Text>
-        <Text style={styles.userdata}>{auth.currentUser.email}</Text>
+        <Text style={styles.userName}>{auth.currentUser ? auth.currentUser.displayName || 'Profile Name' : 'Profile Name'}</Text>
+        <Text style={styles.userdata}>{auth.currentUser ? auth.currentUser.email || 'Email' : 'Email'}</Text>
         {/* Add more profile information as needed */}
         <View style={styles.button}>
           <Button title="Log out" color="#fff" onPress={handleSignOut} />
@@ -64,6 +68,7 @@ const Profile = () => {
         )}
       />
     </View>
+    </>
   );
 };
 
