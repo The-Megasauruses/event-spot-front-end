@@ -7,6 +7,32 @@ import {app} from "../../config"
 const SignUpScreen = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+<<<<<<< Updated upstream
+=======
+  const [displayName, setDisplayName] = useState("");
+  const [validForm, setValidForm] = useState(false);
+  const [errors, setErrors] = useState({})
+  const [loggedIn, setLoggedIn] = React.useState(false)
+
+
+  useEffect(() => {
+
+    validateForm();
+    // console.log(errors)
+  }, [displayName, email, password]);
+
+
+  const validateForm = () => {
+    let errors = {}
+
+    if (!email) { errors.email = "A valid email is required " };
+    if (!password) { errors.password = "A valid password is required" };
+    if (!displayName) { errors.displayName = "Display name is required" };
+
+    setErrors(errors);
+    setValidForm(Object.keys(errors).length === 0);
+  }
+>>>>>>> Stashed changes
 
   const handleSignUp = () => {
 const auth = getAuth();
