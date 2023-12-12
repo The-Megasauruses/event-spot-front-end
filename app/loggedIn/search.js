@@ -14,11 +14,14 @@ const Search = () => {
   };
 
   useEffect(() => {
-    const filterData = () => {
-      const filtered = mockData.filter((item) =>
-        item.title.toLowerCase().includes(searchQuery.toLowerCase())
-      );
-      setFilteredData(filtered);
+    const filterData = async () => {
+      try {
+        const criteria = { title: searchQuery }; 
+        const events = await EventModel.searchEvents(criteria);
+        setFilteredData(events);
+      } catch (error) {
+        console.error("Error searching events:", error);
+      }
     };
 
     filterData();
