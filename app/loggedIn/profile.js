@@ -24,8 +24,6 @@ const Profile = () => {
       });
   };
 
-  console.log(auth.currentUser)
-
   return (
     <>
     {!loggedIn && 
