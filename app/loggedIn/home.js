@@ -5,21 +5,25 @@ import { Link } from 'expo-router';
 import { Event } from "../store/fireStoreClassModel";
 import mockData from '../../mockData.json';
 import { useState, useEffect } from "react";
+import { getAuth } from "firebase/auth";
 
 const Home = () => {
 
   const [eventsList, setEventsList] = useState([]);
+  const [uid, setUid ] = useState('');
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
+        const auth = getAuth();
+        setUid(auth.currentUser.uid);
         const events = await Event.getAllEvents();
         setEventsList(events);
       } catch (error) {
         console.error("Error fetching events:", error);
       }
     };
-
+    
     fetchEvents();
   }, []);
 

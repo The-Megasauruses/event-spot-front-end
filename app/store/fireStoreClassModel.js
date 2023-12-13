@@ -4,6 +4,8 @@ import {
   collection,
   doc,
   addDoc,
+  query,
+  where,
   updateDoc,
   getDoc,
   deleteDoc,
@@ -34,10 +36,10 @@ class User {
   //   }
   // }
 
-  async addUser() {
+  async addUser(userData) {
     try {
       const userCollection = collection(db, "users");
-      const userRef = await addDoc(userCollection, {...this});
+      const userRef = await addDoc(userCollection, userData);
       console.log("User added to Firestore successfully doc path", userRef.id);
       return userRef.id
     } catch (error) {
@@ -45,25 +47,28 @@ class User {
     }
   }
 
-  // async getUser(userId) {
-  //   try {
-  //     const userRef = db.collection("users").doc(userId);
-  //     const userSnapshot = await userRef.get();
+  async getUser(uid) {
+    try {
+      const userRef = collection(db ,"users");
+      const queryRef = query(
+        userRef,
+        where("userId", "==", uid),
+      );
+      const userSnapshot = await getDoc(queryRef);
 
-  //     if (userSnapshot.exists) {
-  //       const userData = userSnapshot.data();
-
-  //       console.log("User data retrieved:", userData);
-  //       return userData;
-  //     } else {
-  //       console.log("User not found");
-  //       return null;
-  //     }
-  //   } catch (error) {
-  //     console.error("Error fetching user data:", error);
-  //     return null;
-  //   }
-  // }
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        console.log("User data retrieved:", userData);
+        return userData;
+      } else {
+        console.log("User not found");
+        return null;
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+      return null;
+    }
+  }
 
   async addEventToUser(userId, eventId) {
     try {

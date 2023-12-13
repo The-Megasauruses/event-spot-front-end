@@ -48,7 +48,7 @@ const SignUpScreen = () => {
           setLoggedIn(true);
           userData = {userid: auth.currentUser.uid, events: []};
           const newUser = new User({...userData});
-          newUser.addUser()
+          newUser.addUser(userData);
         })
         .catch(error => alert(error.message))
     }
