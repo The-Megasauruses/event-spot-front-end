@@ -1,4 +1,5 @@
 import { db } from "../../config";
+
 import {
   collection,
   doc,
@@ -127,6 +128,21 @@ class Event {
     }
   }
 
+  static async getAllEvents() {
+    try {
+      const eventsRef = collection(db ,"events");
+      const querySnapshot = await getDocs(eventsRef);
+      const events = [];
+      querySnapshot.forEach((doc) => {
+        events.push({ id: doc.id, ...doc.data() });
+      });
+      console.log("Success, recieved events!", events);
+      return events;
+    } catch (error) {
+      console.error('Error fetching events:', error);
+    }
+  }
+  
   async updateEvent(eventId, updatedEventData) {
     try {
       // const eventRef = db.collection("events").doc(eventId);

@@ -23,7 +23,7 @@ const SignInScreen = () => {
       .catch(error => {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(error)
+        console.log(errorCode, errorMessage)
       })
   };
 
