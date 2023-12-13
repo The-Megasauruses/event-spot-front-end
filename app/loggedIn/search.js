@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {db} from "../../config";
+import { db } from "../../config";
 import { debounce } from "lodash";
 import { FlatList, Image, View } from "react-native";
 import { query, collection, where, limit, getDocs } from "firebase/firestore";
@@ -64,14 +64,19 @@ const Search = () => {
   return (
     <>
       <Searchbar
+        style={styles.search}
         placeholder="Search"
         onChangeText={onChangeSearch}
         value={searchQuery}
       />
       {loading ? (
-        <ActivityIndicator animating={true} color="#000" />
+        <ActivityIndicator
+          style={{ marginTop: "10%" }}
+          animating={true}
+          color="#000"
+        />
       ) : (
-        <View>
+        <View style={styles.container}>
           <FlatList
             style={styles.list}
             data={displayedItems}
@@ -81,7 +86,9 @@ const Search = () => {
                 <Card.Content>
                   <Title style={styles.spacing}>{item.title}</Title>
                   <Image source={{ uri: item.imgPath }} style={styles.image} />
-                  <Paragraph style={styles.spacing}>{item.date}</Paragraph>
+                  <Paragraph style={styles.spacing}>
+                    {item.happening_at}
+                  </Paragraph>
                   <Paragraph style={styles.spacing}>{item.location}</Paragraph>
                   <Paragraph style={styles.spacing}>
                     {item.description}
@@ -99,7 +106,7 @@ const Search = () => {
               </Card>
             )}
           />
-          <DataTable>
+          {/* <DataTable style={{marginRight: '10%'}}>
             <DataTable.Pagination
               page={page}
               numberOfPages={Math.ceil(
@@ -115,7 +122,7 @@ const Search = () => {
               }
               selectPageDropdownLabel={"Rows per page"}
             />
-          </DataTable>
+          </DataTable> */}
         </View>
       )}
     </>
@@ -123,6 +130,11 @@ const Search = () => {
 };
 
 const styles = {
+  search: {
+    width: "80%",
+    marginTop: "5%",
+    marginLeft: "10%",
+  },
   container: {
     marginVertical: "5%",
     alignItems: "center",

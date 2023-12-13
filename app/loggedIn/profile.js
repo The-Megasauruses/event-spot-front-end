@@ -11,7 +11,7 @@ const Profile = () => {
   const auth = getAuth();
   const [loggedIn, setLoggedIn] = React.useState(true);
   console.log(auth);
-  console.log('logged in?', loggedIn)
+  console.log("logged in?", loggedIn);
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -23,51 +23,60 @@ const Profile = () => {
         console.log("something happened", error);
       });
   };
+
   return (
     <>
-    {!loggedIn && 
-      <Redirect href="/loggedOut/signIn" />
-    }
-    <View style={styles.container}>
-      <View style={styles.avatarContainer}>
-        <UserAvatar />
-      </View>
-      <View style={styles.infoContainer}>
-        <Text style={styles.userName}>{auth.currentUser ? auth.currentUser.displayName || 'Profile Name' : 'Profile Name'}</Text>
-        <Text style={styles.userdata}>{auth.currentUser ? auth.currentUser.email || 'Email' : 'Email'}</Text>
-        {/* Add more profile information as needed */}
-        <View style={styles.button}>
-          <Button title="Log out" color="#fff" onPress={handleSignOut} />
+      {!loggedIn && <Redirect href="/loggedOut/signIn" />}
+      <View style={styles.container}>
+        <View style={styles.avatarContainer}>
+          <UserAvatar />
         </View>
-      </View>
+        <View style={styles.infoContainer}>
+          <Text style={styles.userName}>
+            {auth.currentUser
+              ? auth.currentUser.displayName || "Profile Name"
+              : "Profile Name"}
+          </Text>
+          <Text style={styles.userdata}>
+            {auth.currentUser ? auth.currentUser.email || "Email" : "Email"}
+          </Text>
+          {/* Add more profile information as needed */}
+          <View style={styles.button}>
+            <Button title="Log out" color="#fff" onPress={handleSignOut} />
+          </View>
+        </View>
 
-      <Text style={styles.title}>My Events</Text>
-      <FlatList
-        style={styles.list}
-        data={mockData}
-        keyExtractor={(item) => item.id}
-        renderItem={({ item }) => (
-          <Card style={styles.card}>
-            <Card.Content>
-              <Title style={styles.spacing}>{item.title}</Title>
-              <Image source={{ uri: item.imgPath }} style={styles.image} />
-              <Paragraph style={styles.spacing}>{item.happening_at}</Paragraph>
-              <Paragraph style={styles.spacing}>{item.location}</Paragraph>
-              <Paragraph style={styles.spacing}>{item.description}</Paragraph>
-              <View style={styles.button}>
-                <Button
-                  title="Cancel"
-                  color="#fff"
-                  onPress={() =>
-                    console.log("This button should link to Create Event page")
-                  }
-                />
-              </View>
-            </Card.Content>
-          </Card>
-        )}
-      />
-    </View>
+        <Text style={styles.title}>My Events</Text>
+        <FlatList
+          style={styles.list}
+          data={mockData}
+          keyExtractor={(item) => item.id}
+          renderItem={({ item }) => (
+            <Card style={styles.card}>
+              <Card.Content>
+                <Title style={styles.spacing}>{item.title}</Title>
+                <Image source={{ uri: item.imgPath }} style={styles.image} />
+                <Paragraph style={styles.spacing}>
+                  {item.happening_at}
+                </Paragraph>
+                <Paragraph style={styles.spacing}>{item.location}</Paragraph>
+                <Paragraph style={styles.spacing}>{item.description}</Paragraph>
+                <View style={styles.button}>
+                  <Button
+                    title="Cancel"
+                    color="#fff"
+                    onPress={() =>
+                      console.log(
+                        "This button should link to Create Event page"
+                      )
+                    }
+                  />
+                </View>
+              </Card.Content>
+            </Card>
+          )}
+        />
+      </View>
     </>
   );
 };
@@ -100,14 +109,17 @@ const styles = StyleSheet.create({
     fontSize: 16,
     color: "black",
   },
-  list: Platform.OS === "ios" ? {
-    height: "80%",
-    width: "80%",
-    borderRadius: 20,
-  } : {
-    height: "80%",
-    width: "80%",
-  },
+  list:
+    Platform.OS === "ios"
+      ? {
+          height: "80%",
+          width: "80%",
+          borderRadius: 20,
+        }
+      : {
+          height: "80%",
+          width: "80%",
+        },
   card: {
     backgroundColor: "#add8e6",
     marginVertical: 5,
@@ -131,16 +143,19 @@ const styles = StyleSheet.create({
     resizeMode: "cover",
     marginBottom: "3%",
   },
-  button: Platform.OS === "ios" ? {
-    backgroundColor: "#663399",
-    borderRadius: '30%',
-    padding: 5,
-    width: "40%",
-  } : {
-    backgroundColor: "#663399",
-    padding: 5,
-    width: "40%",
-  } ,
+  button:
+    Platform.OS === "ios"
+      ? {
+          backgroundColor: "#663399",
+          borderRadius: "30%",
+          padding: 5,
+          width: "40%",
+        }
+      : {
+          backgroundColor: "#663399",
+          padding: 5,
+          width: "40%",
+        },
 });
 
 export default Profile;

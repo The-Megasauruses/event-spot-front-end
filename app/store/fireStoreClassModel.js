@@ -9,39 +9,21 @@ import {
   updateDoc,
   getDoc,
   deleteDoc,
-  getDocs
+  getDocs,
 } from "firebase/firestore";
 
 class User {
-  constructor(
-    {userId,
-    events}
-  ) {
+  constructor({ userId, events }) {
     this.userId = userId;
     this.events = events || [];
   }
-
-  // async addEvent() {
-  //   try {
-  //     const eventsRef = collection(db, "events");
-  //     const newEventRef = await addDoc(eventsRef, { ...this });
-  //     console.log(
-  //       "Event added to Firestore successfully with ID:",
-  //       newEventRef.id
-  //     );
-  //     return newEventRef.id;
-  //   } catch (error) {
-  //     console.error("Error adding event to Firestore:", error);
-  //     return null;
-  //   }
-  // }
 
   async addUser(userData) {
     try {
       const userCollection = collection(db, "users");
       const userRef = await addDoc(userCollection, userData);
       console.log("User added to Firestore successfully doc path", userRef.id);
-      return userRef.id
+      return userRef.id;
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }
@@ -49,11 +31,8 @@ class User {
 
   async getUser(uid) {
     try {
-      const userRef = collection(db ,"users");
-      const queryRef = query(
-        userRef,
-        where("userId", "==", uid),
-      );
+      const userRef = collection(db, "users");
+      const queryRef = query(userRef, where("userId", "==", uid));
       const userSnapshot = await getDoc(queryRef);
 
       if (userSnapshot.exists()) {
@@ -72,7 +51,7 @@ class User {
 
   async addEventToUser(userId, eventId) {
     try {
-      const userRef = doc(db ,"users", userId);
+      const userRef = doc(db, "users", userId);
       const userSnapshot = await getDoc(userRef);
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
@@ -136,7 +115,7 @@ class Event {
 
   static async getAllEvents() {
     try {
-      const eventsRef = collection(db ,"events");
+      const eventsRef = collection(db, "events");
       const querySnapshot = await getDocs(eventsRef);
       const events = [];
       querySnapshot.forEach((doc) => {
@@ -145,10 +124,10 @@ class Event {
       console.log("Success, recieved events!", events);
       return events;
     } catch (error) {
-      console.error('Error fetching events:', error);
+      console.error("Error fetching events:", error);
     }
   }
-  
+
   async updateEvent(eventId, updatedEventData) {
     try {
       // const eventRef = db.collection("events").doc(eventId);
@@ -180,7 +159,6 @@ class Event {
   //  const criteria1 = { tile: 'event 1' } or const criteria = {host: 'rhett' }
   //  usage:
   //  const matchingEvents = await Event.serchEvents(criteria1)
-  
 }
 
 export { User, Event };
