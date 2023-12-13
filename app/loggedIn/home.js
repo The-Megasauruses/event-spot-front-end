@@ -3,7 +3,6 @@ import { View, Text, Platform, Image, FlatList, TouchableOpacity } from "react-n
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { Link } from 'expo-router';
 import { Event } from "../store/fireStoreClassModel";
-import mockData from '../../mockData.json';
 import { useState, useEffect } from "react";
 
 const Home = () => {
@@ -23,7 +22,7 @@ const Home = () => {
     fetchEvents();
   }, []);
 
-  console.log(eventsList);
+  // console.log(eventsList);
 
   return (
     <View style={styles.container}>
@@ -35,7 +34,9 @@ const Home = () => {
         renderItem={({ item }) => (
           <Card style={styles.card}>
             <Card.Content>
-              <Title style={styles.spacing}>{item.title}</Title>
+              <Title style={styles.spacing}>
+                {item.title}
+              </Title>
               <Image
                 source={{ uri: item.imgPath }} 
                 style={styles.image}

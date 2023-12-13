@@ -32,11 +32,10 @@ class User {
 
   async addUser(userData) {
     try {
-      // const userRef = collection(db ,"users").doc(userId);
       const userCollection = collection(db, "users");
-      const newUser = new User(...userData);
       const userRef = await addDoc(userCollection, newUser);
       console.log("User added to Firestore successfully doc path", userRef.id);
+      return userRef.id;
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }

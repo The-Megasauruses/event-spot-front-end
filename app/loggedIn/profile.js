@@ -23,6 +23,9 @@ const Profile = () => {
         console.log("something happened", error);
       });
   };
+
+  console.log(auth.currentUser)
+
   return (
     <>
     {!loggedIn && 
