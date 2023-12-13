@@ -6,10 +6,6 @@ import {
   updateDoc,
   getDoc,
   deleteDoc,
-  query,
-  where,
-  limit,
-  getDocs
 } from "firebase/firestore";
 
 class User {
