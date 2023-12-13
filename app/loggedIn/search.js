@@ -64,14 +64,15 @@ const Search = () => {
   return (
     <>
       <Searchbar
+      style={styles.search}
         placeholder="Search"
         onChangeText={onChangeSearch}
         value={searchQuery}
       />
       {loading ? (
-        <ActivityIndicator animating={true} color="#000" />
+        <ActivityIndicator style={{marginTop: '10%'}} animating={true} color="#000" />
       ) : (
-        <View>
+        <View style={styles.container}>
           <FlatList
             style={styles.list}
             data={displayedItems}
@@ -79,10 +80,16 @@ const Search = () => {
             renderItem={({ item }) => (
               <Card style={styles.card}>
                 <Card.Content>
-                  <Title style={styles.spacing}>{item.title}</Title>
+                  <Title style={styles.spacing}>
+                    {item.title}
+                  </Title>
                   <Image source={{ uri: item.imgPath }} style={styles.image} />
-                  <Paragraph style={styles.spacing}>{item.date}</Paragraph>
-                  <Paragraph style={styles.spacing}>{item.location}</Paragraph>
+                  <Paragraph style={styles.spacing}>
+                    {item.happening_at}
+                  </Paragraph>
+                  <Paragraph style={styles.spacing}>
+                    {item.location}
+                  </Paragraph>
                   <Paragraph style={styles.spacing}>
                     {item.description}
                   </Paragraph>
@@ -99,7 +106,7 @@ const Search = () => {
               </Card>
             )}
           />
-          <DataTable>
+          {/* <DataTable style={{marginRight: '10%'}}>
             <DataTable.Pagination
               page={page}
               numberOfPages={Math.ceil(
@@ -115,7 +122,7 @@ const Search = () => {
               }
               selectPageDropdownLabel={"Rows per page"}
             />
-          </DataTable>
+          </DataTable> */}
         </View>
       )}
     </>
@@ -123,6 +130,11 @@ const Search = () => {
 };
 
 const styles = {
+  search: {
+    width: '80%',
+    marginTop: "5%",
+    marginLeft: '10%',
+  },
   container: {
     marginVertical: "5%",
     alignItems: "center",

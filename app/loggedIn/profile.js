@@ -23,6 +23,7 @@ const Profile = () => {
         console.log("something happened", error);
       });
   };
+
   return (
     <>
     {!loggedIn && 

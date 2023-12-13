@@ -19,26 +19,13 @@ class User {
     this.events = events || [];
   }
 
-  // async addEvent() {
-  //   try {
-  //     const eventsRef = collection(db, "events");
-  //     const newEventRef = await addDoc(eventsRef, { ...this });
-  //     console.log(
-  //       "Event added to Firestore successfully with ID:",
-  //       newEventRef.id
-  //     );
-  //     return newEventRef.id;
-  //   } catch (error) {
-  //     console.error("Error adding event to Firestore:", error);
-  //     return null;
-  //   }
-  // }
-
-  async addUser() {
+  async addUser(userData) {
     try {
+      // const userRef = collection(db ,"users").doc(userId);
       const userCollection = collection(db, "users");
-      const userRef = await addDoc(userCollection, {...this});
+      const userRef = await addDoc(userCollection, newUser);
       console.log("User added to Firestore successfully doc path", userRef.id);
+      return userRef.id;
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }
