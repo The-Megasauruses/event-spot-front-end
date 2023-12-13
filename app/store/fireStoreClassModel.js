@@ -22,7 +22,10 @@ class User {
   async addUser(userData) {
     try {
       // const userRef = collection(db ,"users").doc(userId);
+      const newUser = userData;
       const userCollection = collection(db, "users");
+      console.log('newUser', newUser)
+      console.log('userCollection', userCollection)
       const userRef = await addDoc(userCollection, newUser);
       console.log("User added to Firestore successfully doc path", userRef.id);
       return userRef.id;
