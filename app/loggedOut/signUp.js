@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { View, Text, TextInput, StyleSheet } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getAuth, createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { User } from '../store/fireStoreClassModel';
 import { app } from "../../config";
 import { Link, Redirect } from 'expo-router';
 
@@ -36,6 +37,7 @@ const SignUpScreen = () => {
     const auth = getAuth();
     if (validForm) {
       // Handle sign-up logic (e.g., call registration API)
+
       console.log("Signing up with:", email, password);
       console.log('auth', auth)
       createUserWithEmailAndPassword(auth, email, password)
@@ -44,6 +46,9 @@ const SignUpScreen = () => {
           console.log('Registered with:', user.email);
           updateProfile(user, { displayName: displayName })
           setLoggedIn(true);
+          userData = {userid: auth.currentUser.uid, events: []};
+          const newUser = new User({...userData});
+          newUser.addUser()
         })
         .catch(error => alert(error.message))
     }

@@ -12,10 +12,10 @@ import {
 
 class User {
   constructor(
-    {userName,
+    {userId,
     events}
   ) {
-    this.userName = userName;
+    this.userId = userId;
     this.events = events || [];
   }
 
@@ -39,6 +39,7 @@ class User {
       const userCollection = collection(db, "users");
       const userRef = await addDoc(userCollection, {...this});
       console.log("User added to Firestore successfully doc path", userRef.id);
+      return userRef.id
     } catch (error) {
       console.error("Error adding user to Firestore:", error);
     }
@@ -64,24 +65,22 @@ class User {
   //   }
   // }
 
-  // async addEventToUser(userId, eventId) {
-  //   try {
-  //     const userRef = db.collection("users").doc(userId);
-  //     const userSnapshot = await userRef.get();
-
-  //     if (userSnapshot.exists) {
-  //       const userData = userSnapshot.data();
-  //       const updatedEvents = [...userData.events, eventId];
-
-  //       await userRef.update({ events: updatedEvents });
-  //       console.log("Event added to user successfully");
-  //     } else {
-  //       console.log("User not found");
-  //     }
-  //   } catch (error) {
-  //     console.error("Error adding event to user:", error);
-  //   }
-  // }
+  async addEventToUser(userId, eventId) {
+    try {
+      const userRef = doc(db ,"users", userId);
+      const userSnapshot = await getDoc(userRef);
+      if (userSnapshot.exists()) {
+        const userData = userSnapshot.data();
+        const updatedEvents = [...userData.events, eventId];
+        await updateDoc(userRef, { events: updatedEvents });
+        console.log("Event added to user successfully");
+      } else {
+        console.log("User not found");
+      }
+    } catch (error) {
+      console.error("Error adding event to user:", error);
+    }
+  }
 }
 
 class Event {
