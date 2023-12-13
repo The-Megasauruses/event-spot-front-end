@@ -1,5 +1,4 @@
 import { db } from "../../config";
-
 import {
   collection,
   doc,
@@ -49,13 +48,13 @@ class User {
     }
   }
 
-  async addEventToUser(userId, eventId) {
+  async addEventToUser(userId, event) {
     try {
       const userRef = doc(db, "users", userId);
       const userSnapshot = await getDoc(userRef);
       if (userSnapshot.exists()) {
         const userData = userSnapshot.data();
-        const updatedEvents = [...userData.events, eventId];
+        const updatedEvents = [...userData.events, event];
         await updateDoc(userRef, { events: updatedEvents });
         console.log("Event added to user successfully");
       } else {
