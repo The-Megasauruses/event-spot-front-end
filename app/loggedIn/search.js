@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import {db} from "../../config";
+import { db } from "../../config";
 import { debounce } from "lodash";
 import { FlatList, Image, View } from "react-native";
 import { query, collection, where, limit, getDocs } from "firebase/firestore";
@@ -64,13 +64,17 @@ const Search = () => {
   return (
     <>
       <Searchbar
-      style={styles.search}
+        style={styles.search}
         placeholder="Search"
         onChangeText={onChangeSearch}
         value={searchQuery}
       />
       {loading ? (
-        <ActivityIndicator style={{marginTop: '10%'}} animating={true} color="#000" />
+        <ActivityIndicator
+          style={{ marginTop: "10%" }}
+          animating={true}
+          color="#000"
+        />
       ) : (
         <View style={styles.container}>
           <FlatList
@@ -80,16 +84,12 @@ const Search = () => {
             renderItem={({ item }) => (
               <Card style={styles.card}>
                 <Card.Content>
-                  <Title style={styles.spacing}>
-                    {item.title}
-                  </Title>
+                  <Title style={styles.spacing}>{item.title}</Title>
                   <Image source={{ uri: item.imgPath }} style={styles.image} />
                   <Paragraph style={styles.spacing}>
                     {item.happening_at}
                   </Paragraph>
-                  <Paragraph style={styles.spacing}>
-                    {item.location}
-                  </Paragraph>
+                  <Paragraph style={styles.spacing}>{item.location}</Paragraph>
                   <Paragraph style={styles.spacing}>
                     {item.description}
                   </Paragraph>
@@ -131,9 +131,9 @@ const Search = () => {
 
 const styles = {
   search: {
-    width: '80%',
+    width: "80%",
     marginTop: "5%",
-    marginLeft: '10%',
+    marginLeft: "10%",
   },
   container: {
     marginVertical: "5%",
