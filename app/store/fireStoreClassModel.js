@@ -17,7 +17,7 @@ class User {
     this.events = events || [];
   }
 
-  async addUser(userData) {
+   async addUser(userData) {
     try {
       const userCollection = collection(db, "users");
       const userRef = await addDoc(userCollection, userData);
@@ -38,15 +38,16 @@ class User {
       console.error(e.message);
     }
   }
-  
-  async getUser(uid) {
-    try {
-      const userRef = collection(db, "users");
-      const queryRef = query(userRef, where("userId", "==", uid));
-      const userSnapshot = await getDoc(queryRef);
 
-      if (userSnapshot.exists()) {
-        const userData = userSnapshot.data();
+  static async getUser(uid) {
+    try {
+      console.log("this is on line 44:" , db, uid)
+      const queryRef = query(collection(db, "users"), where("userId", "==", uid));
+      console.log("this is the queryRef:",queryRef);
+      const userSnapshot = await getDocs(queryRef);
+      
+      if (userSnapshot[0]) {
+        const userData = userSnapshot[0].id;
         console.log("User data retrieved:", userData);
         return userData;
       } else {
@@ -59,7 +60,7 @@ class User {
     }
   }
 
-  async addEventToUser(userId, event) {
+  static async addEventToUser(userId, event) {
     try {
       const userRef = doc(db, "users", userId);
       const userSnapshot = await getDoc(userRef);
@@ -89,7 +90,7 @@ class Event {
     this.attendees = [];
   }
 
-  async addEvent() {
+  static async addEvent() {
     try {
       const eventsRef = collection(db, "events");
       const newEventRef = await addDoc(eventsRef, { ...this });
@@ -104,7 +105,7 @@ class Event {
     }
   }
 
-  async getEventById(eventId) {
+  static async getEventById(eventId) {
     try {
       const eventRef = doc(db, "events", eventId);
       const eventSnapshot = await getDoc(eventRef);
@@ -138,7 +139,7 @@ class Event {
     }
   }
 
-  async updateEvent(eventId, updatedEventData) {
+  static async updateEvent(eventId, updatedEventData) {
     try {
       // const eventRef = db.collection("events").doc(eventId);
       const eventRef = doc(db, "events", eventId);
@@ -152,7 +153,7 @@ class Event {
     }
   }
 
-  async removeEvent(eventId) {
+  static async removeEvent(eventId) {
     try {
       const eventRef = doc(db, "events", eventId);
       await deleteDoc(eventRef);
