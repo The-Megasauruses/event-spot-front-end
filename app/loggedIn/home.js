@@ -12,16 +12,32 @@ import { Link } from "expo-router";
 import { Event } from "../store/fireStoreClassModel";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
+import { collection, query, where, getDocs } from "firebase/firestore"
+import { db } from "../../config";
+import {User} from "../store/fireStoreClassModel"
 
 const Home = () => {
   const [eventsList, setEventsList] = useState([]);
-  const [uid, setUid] = useState("");
+  const [user, setUser] = useState({});
 
   useEffect(() => {
     const fetchEvents = async () => {
       try {
         const auth = getAuth();
-        setUid(auth.currentUser.uid);
+        console.log(auth.currentUser.uid)
+        const q = query(collection(db, "users"), where("userid", "==", auth.currentUser.uid))
+        console.log('q', q)
+        const snapshot = await getDocs(q)
+        snapshot.forEach(value => {
+          console.log('value id??', value.id)
+          const newUser = {
+            id: value.id,
+            events: value.data().events,
+            userId: value.data().userid
+          }
+          console.log('newUser', newUser)
+          setUser(newUser)
+        })
         const events = await Event.getAllEvents();
         setEventsList(events);
       } catch (error) {
@@ -30,8 +46,10 @@ const Home = () => {
     };
 
     fetchEvents();
-  }, [uid]);
-
+  }, []);
+  const handlePress = (uid) => {
+    return
+  }
   // console.log(eventsList);
 
   return (
@@ -53,7 +71,9 @@ const Home = () => {
                 mode="contained"
                 style={{ width: "40%" }}
                 onPress={() =>
-                  console.log("This button should add this to my events")
+                  // console.log("This button should add this to my events", user.newUser)
+                  // handlePress(uid)
+                  User.addEventToUser(user.id, item)
                 }
               >
                 join

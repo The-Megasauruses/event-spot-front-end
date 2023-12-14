@@ -17,7 +17,7 @@ class User {
     this.events = events || [];
   }
 
-  async addUser(userData) {
+  static async addUser(userData) {
     try {
       const userCollection = collection(db, "users");
       const userRef = await addDoc(userCollection, userData);
@@ -28,7 +28,7 @@ class User {
     }
   }
 
-  async getUser(uid) {
+  static async getUser(uid) {
     try {
       const userRef = collection(db, "users");
       const queryRef = query(userRef, where("userId", "==", uid));
@@ -48,15 +48,23 @@ class User {
     }
   }
 
-  async addEventToUser(userId, event) {
+  static async addEventToUser(userId, event) {
     try {
-      const userRef = doc(db, "users", userId);
-      const userSnapshot = await getDoc(userRef);
-      if (userSnapshot.exists()) {
+      // console.log(userId, event)
+      // const userRef = collection(db, "users");
+      // const queryRef = query(userRef, where("id", "==", userId));
+      // const userSnapshot = await getDocs(queryRef);
+      // console.log('userSnapshot', userSnapshot)
+      const userRef = doc(db, "users", userId)
+      const userSnapshot = await getDoc(userRef)
+      console.log('response', userSnapshot.data())
+      if (userSnapshot) {
         const userData = userSnapshot.data();
+        console.log('userData', userData)
         const updatedEvents = [...userData.events, event];
         await updateDoc(userRef, { events: updatedEvents });
         console.log("Event added to user successfully");
+
       } else {
         console.log("User not found");
       }
@@ -120,7 +128,9 @@ class Event {
       querySnapshot.forEach((doc) => {
         events.push({ id: doc.id, ...doc.data() });
       });
-      console.log("Success, recieved events!", events);
+      // console.log("Success, recieved events!", events);
+
+
       return events;
     } catch (error) {
       console.error("Error fetching events:", error);
