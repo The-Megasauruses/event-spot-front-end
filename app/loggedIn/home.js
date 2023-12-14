@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { Link } from "expo-router";
-import { Event } from "../store/fireStoreClassModel";
+import { Event, User } from "../store/fireStoreClassModel";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 
@@ -32,6 +32,15 @@ const Home = () => {
     fetchEvents();
   }, [uid]);
 
+  useEffect(() => {
+    // this is here
+    const _test = async () => {
+      const userRef = await User.getUser(uid);
+      console.log("this is the userRef:", userRef);
+    };
+    console.log("this is the uid:", uid);
+    _test();
+  }, [uid]);
   // console.log(eventsList);
 
   return (
