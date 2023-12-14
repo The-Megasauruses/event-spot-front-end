@@ -28,6 +28,17 @@ class User {
     }
   }
 
+  static async getAllUsers() {
+    try {
+      const queryData = await getDocs(collection(db, "users"));
+      let allUsers = [];
+      queryData.docs.forEach((obj) => allUsers.push(obj.data()));
+      return allUsers;
+    } catch (e) {
+      console.error(e.message);
+    }
+  }
+  
   async getUser(uid) {
     try {
       const userRef = collection(db, "users");
