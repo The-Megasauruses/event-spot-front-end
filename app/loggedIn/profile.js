@@ -14,7 +14,6 @@ const Profile = () => {
   const auth = getAuth();
   const [loggedIn, setLoggedIn] = useState(true);
   const [user, setUser] = useState({});
-  const [events, setEvents] = useState([]);
   console.log(auth);
   console.log("logged in?", loggedIn);
 

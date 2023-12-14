@@ -67,8 +67,8 @@ const CreateEvent = () => {
 
   const handlePublish = async () => {
     try {
-      const newEvent = new Event({ ...form });
-      const eventId = newEvent.addEvent();
+
+      const eventId = Event.addEvent(form);
       console.log("Event added with ID:", eventId);
       router.back();
     } catch (error) {

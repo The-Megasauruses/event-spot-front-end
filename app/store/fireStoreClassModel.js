@@ -101,10 +101,10 @@ class Event {
     this.attendees = [];
   }
 
-  static async addEvent() {
+ static async addEvent(event) {
     try {
       const eventsRef = collection(db, "events");
-      const newEventRef = await addDoc(eventsRef, { ...this });
+      const newEventRef = await addDoc(eventsRef, event);
       console.log(
         "Event added to Firestore successfully with ID:",
         newEventRef.id
@@ -116,7 +116,7 @@ class Event {
     }
   }
 
-  static async getEventById(eventId) {
+  async getEventById(eventId) {
     try {
       const eventRef = doc(db, "events", eventId);
       const eventSnapshot = await getDoc(eventRef);
