@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import { Card, Title, Paragraph, Button } from "react-native-paper";
 import { Link } from "expo-router";
-import { Event } from "../store/fireStoreClassModel";
+import { Event, User } from "../store/fireStoreClassModel";
 import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore"
@@ -47,10 +47,6 @@ const Home = () => {
 
     fetchEvents();
   }, []);
-  const handlePress = (uid) => {
-    return
-  }
-  // console.log(eventsList);
 
   return (
     <View style={styles.container}>
