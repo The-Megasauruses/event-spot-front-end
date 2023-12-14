@@ -14,7 +14,6 @@ import { useState, useEffect } from "react";
 import { getAuth } from "firebase/auth";
 import { collection, query, where, getDocs } from "firebase/firestore"
 import { db } from "../../config";
-import {User} from "../store/fireStoreClassModel"
 
 const Home = () => {
   const [eventsList, setEventsList] = useState([]);
