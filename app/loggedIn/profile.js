@@ -1,4 +1,4 @@
-import React from "react";
+import { useState, useEffect } from "react";
 import { View, Text, StyleSheet, FlatList, Image, Button } from "react-native";
 import UserAvatar from "./components/userAvatar.js";
 import mockData from "../../mockData.json";
@@ -6,12 +6,35 @@ import { Card, Title, Paragraph } from "react-native-paper";
 import { getAuth, signOut } from "firebase/auth";
 import { Redirect } from "expo-router";
 import { EventModel, UserModel } from "../store/fireStoreClassModel.js";
+import { collection, query, where, getDocs  } from "firebase/firestore";
+import { db } from "../../config";
+
 
 const Profile = () => {
   const auth = getAuth();
-  const [loggedIn, setLoggedIn] = React.useState(true);
+  const [loggedIn, setLoggedIn] = useState(true);
+  const [userEvents, setUserEvents] = useState([]);
   console.log(auth);
   console.log("logged in?", loggedIn);
+
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const q = query(collection(db, "users"), where ("userid", "==", auth.currentUser.uid))
+        const snapshot = await getDocs(q)
+        console.log('snapshot', snapshot)
+        snapshot.forEach(value => {
+          console.log('value', value.data().events)
+          setUserEvents(value.data().events);
+        })
+      } catch (error) {
+        console.error("Error getting events", error)
+      }
+    }
+    fetchEvents()
+    console.log('userEvents', userEvents)
+  }, [])
+
   const handleSignOut = () => {
     signOut(auth)
       .then(() => {
@@ -49,7 +72,7 @@ const Profile = () => {
         <Text style={styles.title}>My Events</Text>
         <FlatList
           style={styles.list}
-          data={mockData}
+          data={userEvents}
           keyExtractor={(item) => item.id}
           renderItem={({ item }) => (
             <Card style={styles.card}>
@@ -67,7 +90,7 @@ const Profile = () => {
                     color="#fff"
                     onPress={() =>
                       console.log(
-                        "This button should link to Create Event page"
+                        "This button should link to Create Event page", item
                       )
                     }
                   />
