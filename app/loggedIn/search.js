@@ -12,6 +12,9 @@ import {
   DataTable,
   ActivityIndicator,
 } from "react-native-paper";
+import { Event, User } from "../store/fireStoreClassModel";
+import { getAuth } from "firebase/auth";
+
 
 const Search = () => {
   const [searchQuery, setSearchQuery] = useState("");
@@ -19,6 +22,7 @@ const Search = () => {
   const [numberOfItemsPerPage, setNumberOfItemsPerPage] = useState(10);
   const [filteredData, setFilteredData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [user, setUser] = useState({});
 
   const onChangeSearch = (query) => {
     setSearchQuery(query);
@@ -55,6 +59,32 @@ const Search = () => {
   const debouncedFilterData = debounce(filterData, 300);
 
   useEffect(() => {
+    const fetchUser = async () => {
+      try {
+        const auth = getAuth();
+        console.log(auth.currentUser.uid)
+        const q = query(collection(db, "users"), where("userid", "==", auth.currentUser.uid))
+        console.log('q', q)
+        const snapshot = await getDocs(q)
+        snapshot.forEach(value => {
+          console.log('value inside search', value.id)
+          const newUser = {
+            id: value.id,
+            events: value.data().events,
+            userId: value.data().userid
+          }
+          console.log('newUser', newUser)
+          setUser(newUser)
+        })
+      } catch(error){
+        console.log(error)
+      }
+    }
+    fetchUser();
+  }, [])
+
+  useEffect(() => {
+
     debouncedFilterData();
   }, [searchQuery]);
   const from = page * numberOfItemsPerPage + 1;
@@ -97,7 +127,7 @@ const Search = () => {
                     mode="contained"
                     style={{ width: "40%" }}
                     onPress={() =>
-                      console.log("This button should add this to my events")
+                      User.addEventToUser(user.id, item)
                     }
                   >
                     join
@@ -142,14 +172,14 @@ const styles = {
   list:
     Platform.OS === "ios"
       ? {
-          height: "80%",
-          width: "80%",
-          borderRadius: 20,
-        }
+        height: "80%",
+        width: "80%",
+        borderRadius: 20,
+      }
       : {
-          height: "80%",
-          width: "80%",
-        },
+        height: "80%",
+        width: "80%",
+      },
 
   card: {
     backgroundColor: "#add8e6",
@@ -177,16 +207,16 @@ const styles = {
   button:
     Platform.OS === "ios"
       ? {
-          backgroundColor: "#663399",
-          borderRadius: "30%",
-          padding: 10,
-          marginTop: "4%",
-        }
+        backgroundColor: "#663399",
+        borderRadius: "30%",
+        padding: 10,
+        marginTop: "4%",
+      }
       : {
-          backgroundColor: "#663399",
-          padding: 10,
-          marginTop: "4%",
-        },
+        backgroundColor: "#663399",
+        padding: 10,
+        marginTop: "4%",
+      },
   buttonText: {
     color: "white",
     fontSize: 18,

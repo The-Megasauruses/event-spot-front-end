@@ -28,7 +28,7 @@ const Home = () => {
         console.log('q', q)
         const snapshot = await getDocs(q)
         snapshot.forEach(value => {
-          console.log('value id??', value.id)
+          // console.log('value id??', value.id)
           const newUser = {
             id: value.id,
             events: value.data().events,
