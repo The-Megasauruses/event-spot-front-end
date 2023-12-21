@@ -1,15 +1,14 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native';
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ScrollView, Image, Dimensions } from 'react-native';
 import { Button } from 'react-native-paper';
 import { getAuth, signInWithEmailAndPassword, sendPasswordResetEmail } from "firebase/auth";
 import { Link, Redirect } from 'expo-router';
-
-
 
 const SignInScreen = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [loggedIn, setLoggedIn] = React.useState(false)
+
 
   const handleSignInButton = () => {
     const auth = getAuth();
@@ -29,9 +28,9 @@ const SignInScreen = () => {
 
   return (
     <>
-    {loggedIn && 
-          <Redirect href="/loggedIn/home" />
-    }
+      {loggedIn &&
+        <Redirect href="/loggedIn/home" />
+      }
       <View>
         <TextInput
           placeholder="Email"

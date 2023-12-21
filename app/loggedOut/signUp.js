@@ -47,8 +47,7 @@ const SignUpScreen = () => {
           updateProfile(user, { displayName: displayName })
           setLoggedIn(true);
           userData = {userid: auth.currentUser.uid, events: []};
-          const newUser = new User({...userData});
-          newUser.addUser(userData);
+          User.addUser(userData);
         })
         .catch(error => alert(error.message))
     }
